@@ -10,7 +10,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock x:Name="userName" Text="" TextAlignment="Center" TextWrapping="NoWrap" VerticalAlignment="Top" Height="129" FontSize="60" FontFamily="Segoe UI" Margin="0,61,0,0"/>
+        <TextBlock x:Name="userName" Text="" TextAlignment="Center" TextWrapping="NoWrap" VerticalAlignment="Top" Height="139" FontSize="60" FontFamily="Segoe UI" Margin="0,20,0,0"/>
         <ProgressRing x:Name="loadingRing" Height="133" Width="133"/>
         <GridView x:Name="subredditList" ItemsSource="{x:Bind SubReddits}" Margin="0,200,0,20" HorizontalAlignment="Center" VerticalAlignment="Bottom">
             <GridView.ItemTemplate>

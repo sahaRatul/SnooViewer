@@ -1,11 +1,10 @@
 ﻿using System.Collections.ObjectModel;
-using System.Linq;
 using Windows.UI.Xaml.Controls;
 using LibSnoo.Models;
-using LibSnoo.Constants;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System;
+using LibSnoo;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -16,9 +15,10 @@ namespace SnooViewer.Pages
     /// </summary>
     public sealed partial class LandingPage : Page
     {
-        private readonly HttpClient httpClient = new HttpClient();
         ObservableCollection<SubredditViewModel> SubReddits { get; } = new ObservableCollection<SubredditViewModel>();
         readonly Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+        readonly Landing landing = new Landing();
+
         public LandingPage()
         {
             this.InitializeComponent();
@@ -28,11 +28,12 @@ namespace SnooViewer.Pages
         private async void LoadData()
         {
             loadingRing.IsActive = true;
-            var userDetails = await httpClient.GetAsync<UserViewModel>(Constants.redditOauthApiBaseUrl + "api/v1/me", LibSnoo.Models.DataContext.Token);
+            var userDetails = await landing.GetUserDetails(LibSnoo.Models.DataContext.Token);
             var test = JsonConvert.SerializeObject(userDetails);
             List<SubredditViewModel> retrievedSubReddits = null;
 
             Windows.Storage.StorageFile subredditFile = null;
+            
             //Retrieve from storage if available
             try
             {
@@ -42,10 +43,13 @@ namespace SnooViewer.Pages
             {
                 subredditFile = await storageFolder.CreateFileAsync("subreddits.txt");
             }
+
+            //Read the file
             string text = await Windows.Storage.FileIO.ReadTextAsync(subredditFile);
+
             if (text == null || text == string.Empty)
             {
-                retrievedSubReddits = (await httpClient.GetAsync<KindViewModel>(Constants.redditOauthApiBaseUrl + "subreddits/mine/subscriber?limit=100", LibSnoo.Models.DataContext.Token)).Data.Children.Select(x => x.Data).ToList();
+                retrievedSubReddits = await landing.GetSubscribedSubreddits(LibSnoo.Models.DataContext.Token);
                 await Windows.Storage.FileIO.WriteTextAsync(subredditFile, JsonConvert.SerializeObject(retrievedSubReddits));
             }
             else
@@ -60,7 +64,7 @@ namespace SnooViewer.Pages
             }
 
             loadingRing.IsActive = false;
-            userName.Text = "Hi! " + userDetails.Name;
+            userName.Text = "Hi, " + userDetails.Name + "!";
         }
     }
 }

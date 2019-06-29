@@ -121,6 +121,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Constants\Constants.cs" />
+    <Compile Include="Landing.cs" />
     <Compile Include="Login.cs" />
     <Compile Include="Models\AuthRequestModel.cs" />
     <Compile Include="Models\AuthViewModel.cs" />

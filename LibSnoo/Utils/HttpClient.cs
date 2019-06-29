@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using Newtonsoft.Json.Linq;
 
-namespace SnooViewer
+namespace LibSnoo.Utils
 {
     public class HttpClient
     {
