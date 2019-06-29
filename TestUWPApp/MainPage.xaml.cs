@@ -36,7 +36,7 @@ namespace TestUWPApp
                 var updatedUri = new Uri(updatedUriStr);
                 Models.DataContext.Token = HttpUtility.ParseQueryString(updatedUri.Query).Get("access_token");
                 args.Cancel = true;
-                this.Frame.Navigate(typeof(Pages.FrontPage));
+                this.Frame.Navigate(typeof(Pages.LandingPage));
             }
         }
     }

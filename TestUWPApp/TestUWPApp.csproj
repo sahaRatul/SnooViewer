@@ -133,8 +133,8 @@
     <Compile Include="Models\SubredditViewModel.cs" />
     <Compile Include="Models\UserFlairRichtextViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
-    <Compile Include="Pages\FrontPage.xaml.cs">
-      <DependentUpon>FrontPage.xaml</DependentUpon>
+    <Compile Include="Pages\LandingPage.xaml.cs">
+      <DependentUpon>LandingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -162,7 +162,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\FrontPage.xaml">
+    <Page Include="Pages\LandingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
