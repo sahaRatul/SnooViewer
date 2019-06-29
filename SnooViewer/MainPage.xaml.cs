@@ -4,6 +4,8 @@ using LibSnoo;
 using LibSnoo.Constants;
 using System.Linq;
 using System.Web;
+using Windows.UI.ViewManagement;
+using Windows.Foundation;
 
 namespace SnooViewer
 {
@@ -12,25 +14,30 @@ namespace SnooViewer
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private readonly Login login = new Login("84uK1BRyofwcVw", "V5oWEHWvoKXee9Dwi6W_q6ehoCw");
-        readonly Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private readonly static string clientId = "84uK1BRyofwcVw";
+        private readonly static string clientSecret = "V5oWEHWvoKXee9Dwi6W_q6ehoCw";
+        private readonly Login login = new Login(clientId, clientSecret);
+        private readonly Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
         public MainPage()
         {
-            var clientId = "84uK1BRyofwcVw";
-            var clientSecret = "V5oWEHWvoKXee9Dwi6W_q6ehoCw";
             this.InitializeComponent();
-            if((string)localSettings.Values["refresh_token"] != null || (string)localSettings.Values["refresh_token"] != string.Empty)
+            if ((string)localSettings.Values["refresh_token"] != null || (string)localSettings.Values["refresh_token"] != string.Empty)
             {
-                this.RefreshToken();
+                RefreshToken();
             }
             else
             {
-                login = new Login(clientId, clientSecret);
-                var scopes = Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
-                var urlParams = "client_id=" + clientId + "&response_type=code&state=uyagsjgfhjs&duration=permanent&redirect_uri=" + HttpUtility.UrlEncode("http://127.0.0.1:3000/reddit_callback") + "&scope=" + HttpUtility.UrlEncode(scopes);
-                Uri targetUri = new Uri(Constants.redditApiBaseUrl + "authorize?" + urlParams);
-                loginView.Navigate(targetUri);
+                GenerateToken();
             }
+        }
+
+        private void GenerateToken()
+        {
+            var scopes = Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
+            var urlParams = "client_id=" + clientId + "&response_type=code&state=uyagsjgfhjs&duration=permanent&redirect_uri=" + HttpUtility.UrlEncode("http://127.0.0.1:3000/reddit_callback") + "&scope=" + HttpUtility.UrlEncode(scopes);
+            Uri targetUri = new Uri(Constants.redditApiBaseUrl + "authorize?" + urlParams);
+            loginView.Navigate(targetUri);
         }
 
         private async void RefreshToken()
@@ -42,7 +49,7 @@ namespace SnooViewer
             this.Frame.Navigate(typeof(Pages.LandingPage));
         }
 
-        private async void LoginView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
+        private async void LoginView_NavigationStarting(WebView _, WebViewNavigationStartingEventArgs args)
         {
             if (args.Uri.AbsoluteUri.Contains("http://127.0.0.1:3000/reddit_callback"))
             {

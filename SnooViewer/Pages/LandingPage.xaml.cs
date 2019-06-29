@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System;
 using LibSnoo;
+using System.Linq;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -15,9 +16,9 @@ namespace SnooViewer.Pages
     /// </summary>
     public sealed partial class LandingPage : Page
     {
-        ObservableCollection<SubredditViewModel> SubReddits { get; } = new ObservableCollection<SubredditViewModel>();
-        readonly Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-        readonly Landing landing = new Landing();
+        private ObservableCollection<SubredditViewModel> SubReddits { get; } = new ObservableCollection<SubredditViewModel>();
+        private readonly Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+        private readonly Landing landing = new Landing();
 
         public LandingPage()
         {
@@ -28,12 +29,10 @@ namespace SnooViewer.Pages
         private async void LoadData()
         {
             loadingRing.IsActive = true;
+            searchBox.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             var userDetails = await landing.GetUserDetails(LibSnoo.Models.DataContext.Token);
-            var test = JsonConvert.SerializeObject(userDetails);
-            List<SubredditViewModel> retrievedSubReddits = null;
+            Windows.Storage.StorageFile subredditFile;
 
-            Windows.Storage.StorageFile subredditFile = null;
-            
             //Retrieve from storage if available
             try
             {
@@ -47,14 +46,15 @@ namespace SnooViewer.Pages
             //Read the file
             string text = await Windows.Storage.FileIO.ReadTextAsync(subredditFile);
 
+            List<SubredditViewModel> retrievedSubReddits;
             if (text == null || text == string.Empty)
             {
-                retrievedSubReddits = await landing.GetSubscribedSubreddits(LibSnoo.Models.DataContext.Token);
+                retrievedSubReddits = (await landing.GetSubscribedSubreddits(LibSnoo.Models.DataContext.Token)).OrderBy(x => x.Url).ToList();
                 await Windows.Storage.FileIO.WriteTextAsync(subredditFile, JsonConvert.SerializeObject(retrievedSubReddits));
             }
             else
             {
-                retrievedSubReddits = JsonConvert.DeserializeObject<List<SubredditViewModel>>(text);
+                retrievedSubReddits = JsonConvert.DeserializeObject<List<SubredditViewModel>>(text).OrderBy(x => x.Url).ToList();
             }
 
             foreach (var subreddit in retrievedSubReddits)
@@ -65,6 +65,7 @@ namespace SnooViewer.Pages
 
             loadingRing.IsActive = false;
             userName.Text = "Hi, " + userDetails.Name + "!";
+            searchBox.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
     }
 }

@@ -24,5 +24,6 @@
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
+        <TextBox x:Name="searchBox" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,120,0,0" Text="" Height="32" Width="395" PlaceholderText="Search or Filter subs"/>
     </Grid>
 </Page>
