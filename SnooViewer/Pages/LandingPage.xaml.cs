@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using SnooViewer.Models;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using LibSnoo.Models;
+using LibSnoo.Constants;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,7 +15,6 @@ namespace SnooViewer.Pages
     {
         private readonly HttpClient httpClient = new HttpClient();
         ObservableCollection<SubredditViewModel> SubReddits { get; } = new ObservableCollection<SubredditViewModel>();
-        private readonly string redditOauthApiBaseUrl = "https://oauth.reddit.com/";
         public LandingPage()
         {
             this.InitializeComponent();
@@ -36,8 +24,8 @@ namespace SnooViewer.Pages
         private async void LoadData()
         {
             loadingRing.IsActive = true;
-            var userDetails = await httpClient.GetAsync<UserViewModel>(redditOauthApiBaseUrl + "api/v1/me", Models.DataContext.Token);
-            var retrievedSubReddits = (await httpClient.GetAsync<KindViewModel>(redditOauthApiBaseUrl + "subreddits/mine/subscriber", Models.DataContext.Token)).Data.Children.Select(x => x.Data).ToList();
+            var userDetails = await httpClient.GetAsync<UserViewModel>(Constants.redditOauthApiBaseUrl + "api/v1/me", LibSnoo.Models.DataContext.Token);
+            var retrievedSubReddits = (await httpClient.GetAsync<KindViewModel>(Constants.redditOauthApiBaseUrl + "subreddits/mine/subscriber", LibSnoo.Models.DataContext.Token)).Data.Children.Select(x => x.Data).ToList();
             foreach (var subreddit in retrievedSubReddits)
             {
                 subreddit.KeyColor = subreddit.KeyColor == "" ? subreddit.PrimaryColor == "" ? "#000000" : subreddit.PrimaryColor : subreddit.KeyColor;

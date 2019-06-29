@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace SnooViewer.Constants
+namespace LibSnoo.Constants
 {
     public class Constants
     {
+        public static readonly string redditApiBaseUrl = "https://ssl.reddit.com/api/v1/";
+        public static readonly string redditOauthApiBaseUrl = "https://oauth.reddit.com/";
+
         public static List<string> scopeList = new List<string>
         {
             "creddits",

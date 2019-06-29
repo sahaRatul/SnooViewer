@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SnooViewer.Models
+namespace LibSnoo.Models
 {
     public partial class UserViewModel
     {

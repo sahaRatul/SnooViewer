@@ -1,4 +1,4 @@
-﻿namespace SnooViewer.Models
+﻿namespace LibSnoo.Models
 {
     public partial class DefaultSrsHoldoutViewModel
     {

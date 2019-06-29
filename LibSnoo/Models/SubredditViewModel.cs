@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace SnooViewer.Models
+namespace LibSnoo.Models
 {
     public class SubredditViewModel
     {

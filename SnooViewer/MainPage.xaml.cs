@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Web;
 using Windows.UI.Xaml.Controls;
+using LibSnoo;
+using LibSnoo.Constants;
+using System.Linq;
+using System.Web;
 
 namespace SnooViewer
 {
@@ -11,32 +12,46 @@ namespace SnooViewer
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private readonly string redditApiBaseUrl = "https://www.reddit.com/api/v1/";
-
+        private readonly Login login = new Login("84uK1BRyofwcVw", "V5oWEHWvoKXee9Dwi6W_q6ehoCw");
+        readonly Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         public MainPage()
         {
+            var clientId = "84uK1BRyofwcVw";
+            var clientSecret = "V5oWEHWvoKXee9Dwi6W_q6ehoCw";
             this.InitializeComponent();
-            this.Login();
-        }
-
-        private void Login()
-        {
-            var scopes = Constants.Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
-            var urlParams = "client_id=X70tYeVZG2rz8g&response_type=token&state=uyagsjgfhjs&redirect_uri=" + HttpUtility.UrlEncode("http://127.0.0.1:3000/reddit_callback") + "&scope=" + HttpUtility.UrlEncode(scopes);
-            Uri targetUri = new Uri(redditApiBaseUrl + "authorize?" + urlParams);
-            loginView.Navigate(targetUri);
-        }
-
-        private void LoginView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
-        {
-            if(args.Uri.AbsoluteUri.Contains("http://127.0.0.1:3000/reddit_callback"))
+            if((string)localSettings.Values["refresh_token"] != null || (string)localSettings.Values["refresh_token"] != string.Empty)
             {
-                var regex = new Regex(Regex.Escape("#"));
-                var updatedUriStr = regex.Replace(args.Uri.AbsoluteUri, "?", 1);
-                var updatedUri = new Uri(updatedUriStr);
-                Models.DataContext.Token = HttpUtility.ParseQueryString(updatedUri.Query).Get("access_token");
+                this.RefreshToken();
+            }
+            else
+            {
+                login = new Login(clientId, clientSecret);
+                var scopes = Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
+                var urlParams = "client_id=" + clientId + "&response_type=code&state=uyagsjgfhjs&duration=permanent&redirect_uri=" + HttpUtility.UrlEncode("http://127.0.0.1:3000/reddit_callback") + "&scope=" + HttpUtility.UrlEncode(scopes);
+                Uri targetUri = new Uri(Constants.redditApiBaseUrl + "authorize?" + urlParams);
+                loginView.Navigate(targetUri);
+            }
+        }
+
+        private async void RefreshToken()
+        {
+            //Refresh Token flow
+            var result = await login.Login_Refresh((string)localSettings.Values["refresh_token"]);
+            LibSnoo.Models.DataContext.Token = result.AccessToken;
+            LibSnoo.Models.DataContext.RefreshToken = result.RefreshToken;
+            this.Frame.Navigate(typeof(Pages.LandingPage));
+        }
+
+        private async void LoginView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
+        {
+            if (args.Uri.AbsoluteUri.Contains("http://127.0.0.1:3000/reddit_callback"))
+            {
+                var result = await login.Login_Stage2(args.Uri);
+                LibSnoo.Models.DataContext.Token = result.AccessToken;
+                LibSnoo.Models.DataContext.RefreshToken = result.RefreshToken;
                 args.Cancel = true;
                 this.Frame.Navigate(typeof(Pages.LandingPage));
+                localSettings.Values["refresh_token"] = LibSnoo.Models.DataContext.RefreshToken;
             }
         }
     }

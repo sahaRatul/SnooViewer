@@ -1,14 +1,13 @@
 ﻿using Newtonsoft.Json;
 
-namespace SnooViewer.Models
+namespace LibSnoo.Models
 {
-    public class ChildViewModel
+    public class KindViewModel
     {
-
         [JsonProperty("kind")]
         public string Kind { get; set; }
 
         [JsonProperty("data")]
-        public SubredditViewModel Data { get; set; }
+        public DataViewModel Data { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SnooViewer.Models
+namespace LibSnoo.Models
 {
     public class UserFlairRichtextViewModel
     {
