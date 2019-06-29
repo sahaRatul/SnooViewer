@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TestUWPApp.Models
+namespace SnooViewer.Models
 {
     public partial class UserViewModel
     {

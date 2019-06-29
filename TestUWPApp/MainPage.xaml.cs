@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using Windows.UI.Xaml.Controls;
 
-namespace TestUWPApp
+namespace SnooViewer
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.

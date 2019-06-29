@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace TestUWPApp.Models
+namespace SnooViewer.Models
 {
     public class ChildViewModel
     {

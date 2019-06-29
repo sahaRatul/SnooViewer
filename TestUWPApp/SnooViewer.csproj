@@ -7,8 +7,8 @@
     <ProjectGuid>{EB7FF1B4-0E24-4C4F-967D-E48B79021DD6}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestUWPApp</RootNamespace>
-    <AssemblyName>TestUWPApp</AssemblyName>
+    <RootNamespace>RedditUWP</RootNamespace>
+    <AssemblyName>RedditUWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>

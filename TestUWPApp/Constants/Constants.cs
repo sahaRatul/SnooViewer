@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TestUWPApp.Constants
+namespace SnooViewer.Constants
 {
     public class Constants
     {

@@ -1,4 +1,4 @@
-﻿namespace TestUWPApp.Models
+﻿namespace SnooViewer.Models
 {
     public partial class FeaturesViewModel
     {
