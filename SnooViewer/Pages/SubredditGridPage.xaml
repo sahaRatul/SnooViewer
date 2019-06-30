@@ -15,7 +15,7 @@
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="data:PostOrSubRedditDataViewModel" >
                     <Grid Margin="2" Background="{x:Bind KeyColor}">
-                        <StackPanel HorizontalAlignment="Stretch" Height="130" Width="280" Padding="10 35 10 20">
+                        <StackPanel HorizontalAlignment="Stretch" Height="135" Width="280" Padding="10 35 10 20">
                             <TextBlock TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center" Text="{x:Bind Url}" Foreground="White" FontSize="25" Grid.Column="1"/>
                             <TextBlock TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center" FontWeight="Thin"  Text="{x:Bind Title}" Foreground="White" FontSize="15" Grid.Column="1"/>
                         </StackPanel>

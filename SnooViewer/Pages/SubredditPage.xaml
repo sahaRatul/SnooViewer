@@ -15,12 +15,17 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="data:PostOrSubRedditDataViewModel" >
                     <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="2" BorderBrush="Black">
-                        <StackPanel Orientation="Horizontal">
-                            <Image HorizontalAlignment="Right" Source="{x:Bind Thumbnail}" Width="70" Height="70" />
-                            <StackPanel VerticalAlignment="Center" Height="75" Padding="10">
-                                <TextBlock TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Text="{x:Bind Title}" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" FontSize="20" Grid.Column="1"/>
-                                <TextBlock TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Text="{x:Bind Url}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" FontSize="15" Grid.Column="1"/>
-                            </StackPanel>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70" />
+                        </Grid.RowDefinitions>
+                        <Image HorizontalAlignment="Right" Source="{x:Bind Thumbnail}" Width="70" Height="70" Grid.Column="0" Grid.Row="0" />
+                        <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Height="70" Padding="10">
+                            <TextBlock TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Text="{x:Bind Title}" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" FontSize="20"/>
+                            <TextBlock TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Text="{x:Bind Url}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" FontSize="15"/>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
