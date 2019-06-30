@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="SnooViewer.Pages.LandingPage"
+    x:Class="SnooViewer.Pages.SubredditGridPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SnooViewer.Pages"
@@ -10,20 +10,20 @@
     Background="{ThemeResource SystemControlAcrylicWindowBrush}">
 
     <Grid>
-        <TextBlock x:Name="headertext" Text="Your subreddits" TextAlignment="Left" TextWrapping="NoWrap" VerticalAlignment="Top" Height="70" FontSize="40" FontFamily="Segoe UI" Margin="40,20,0,0"/>
-
-        <GridView x:Name="subredditList" ItemsSource="{x:Bind SubReddits}" Margin="0,100,0,20" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <TextBlock x:Name="headertext" VerticalAlignment="Top" Text="Your subreddits" FontWeight="Thin" TextAlignment="Left" Margin="25 10 10 10" TextWrapping="NoWrap" Height="75" FontSize="40"/>
+        <GridView SelectionMode="None" IsItemClickEnabled="True" x:Name="subredditList" ItemsSource="{x:Bind SubReddits}" Margin="0,75,0,20" HorizontalAlignment="Center" VerticalAlignment="Top" ItemClick="SubredditList_ItemClick">
             <GridView.ItemTemplate>
-                <DataTemplate x:DataType="data:SubredditViewModel" >
+                <DataTemplate x:DataType="data:PostOrSubRedditDataViewModel" >
                     <Grid Margin="2" Background="{x:Bind KeyColor}">
-                        <StackPanel HorizontalAlignment="Center" Height="130" Width="280" Padding="10 35 10 20">
+                        <StackPanel HorizontalAlignment="Stretch" Height="130" Width="280" Padding="10 35 10 20">
                             <TextBlock TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center" Text="{x:Bind Url}" Foreground="White" FontSize="25" Grid.Column="1"/>
-                            <TextBlock TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center" Text="{x:Bind Title}" Foreground="White" FontSize="15" Grid.Column="1"/>
+                            <TextBlock TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center" FontWeight="Thin"  Text="{x:Bind Title}" Foreground="White" FontSize="15" Grid.Column="1"/>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
+        <Frame x:Name="contentFrame"/>
         <ProgressRing x:Name="loadingRing" Height="133" Width="133"/>
     </Grid>
 </Page>

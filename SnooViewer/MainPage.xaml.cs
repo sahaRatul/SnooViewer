@@ -23,15 +23,15 @@ namespace SnooViewer
         public MainPage()
         {
             this.InitializeComponent();
-            if ((string)localSettings.Values["refresh_token"] != null || (string)localSettings.Values["refresh_token"] != string.Empty)
-            {
-                RefreshToken();
-                loginView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-            }
-            else
+            if ((string)localSettings.Values["refresh_token"] == null)
             {
                 navBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 GenerateToken();
+            }
+            else
+            {
+                RefreshToken();
+                loginView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             }
         }
 
@@ -49,8 +49,6 @@ namespace SnooViewer
             var result = await login.Login_Refresh((string)localSettings.Values["refresh_token"]);
             LibSnoo.Models.DataContext.Token = result.AccessToken;
             LibSnoo.Models.DataContext.RefreshToken = result.RefreshToken;
-            //contentFrame.Navigate(typeof(Pages.LandingPage));
-            //this.Frame.Navigate(typeof(Pages.LandingPage));
         }
 
         private async void LoginView_NavigationStarting(WebView _, WebViewNavigationStartingEventArgs args)
@@ -61,11 +59,9 @@ namespace SnooViewer
                 LibSnoo.Models.DataContext.Token = result.AccessToken;
                 LibSnoo.Models.DataContext.RefreshToken = result.RefreshToken;
                 args.Cancel = true;
-                this.Frame.Navigate(typeof(Pages.LandingPage));
                 localSettings.Values["refresh_token"] = LibSnoo.Models.DataContext.RefreshToken;
                 navBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 loginView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                contentFrame.Navigate(typeof(Pages.LandingPage));
             }
         }
 
@@ -78,15 +74,21 @@ namespace SnooViewer
             {
                 pageType = typeof(Pages.SettingsPage);
             }
+            else if ((string)args.InvokedItem == "Front Page")
+            {
+                pageType = typeof(Pages.SubredditPage);
+                contentFrame.NavigateToType(pageType, "all", navOptions);
+            }
             else if ((string)args.InvokedItem == "My Subreddits")
             {
-                pageType = typeof(Pages.LandingPage);
+                pageType = typeof(Pages.SubredditGridPage);
+                contentFrame.NavigateToType(pageType, null, navOptions);
             }
             else if ((string)args.InvokedItem == "Profile")
             {
                 pageType = typeof(Pages.UserPage);
+                contentFrame.NavigateToType(pageType, null, navOptions);
             }
-            contentFrame.NavigateToType(pageType, null, navOptions);
         }
     }
 }

@@ -9,8 +9,9 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <NavigationView Background="{ThemeResource AppBarBackgroundThemeBrush}" x:Name="navBar" SelectionFollowsFocus="Enabled" ItemInvoked="NavBar_ItemInvoked">
+        <NavigationView PaneDisplayMode="LeftCompact" OpenPaneLength="180" Background="{ThemeResource AppBarBackgroundThemeBrush}" x:Name="navBar" SelectionFollowsFocus="Enabled" ItemInvoked="NavBar_ItemInvoked">
             <NavigationView.MenuItems>
+                <NavigationViewItem Icon="Link" Content="Front Page" x:Name="FrontPage" />
                 <NavigationViewItem Icon="Play" Content="My Subreddits" x:Name="SubredditPage" />
                 <NavigationViewItem Icon="Contact" Content="Profile" x:Name="ProfilePage" />
             </NavigationView.MenuItems>

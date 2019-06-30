@@ -19,9 +19,9 @@ namespace LibSnoo
             return httpClient.GetAsync<UserViewModel>(Constants.Constants.redditOauthApiBaseUrl + "api/v1/me", Models.DataContext.Token);
         }
 
-        public async Task<List<SubredditViewModel>> GetSubscribedSubreddits(string token)
+        public async Task<List<PostOrSubRedditDataViewModel>> GetSubscribedSubreddits(string token)
         {
-            return (await httpClient.GetAsync<KindViewModel>(Constants.Constants.redditOauthApiBaseUrl + "subreddits/mine/subscriber?limit=100", token)).Data.Children.Select(x => x.Subreddit).ToList();
+            return (await httpClient.GetAsync<KindViewModel>(Constants.Constants.redditOauthApiBaseUrl + "subreddits/mine/subscriber?limit=100", token)).Data.Children.Select(x => x.Data).ToList();
         }
     }
 }

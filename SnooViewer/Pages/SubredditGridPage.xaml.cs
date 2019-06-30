@@ -7,20 +7,18 @@ using System;
 using LibSnoo;
 using System.Linq;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace SnooViewer.Pages
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class LandingPage : Page
+    public sealed partial class SubredditGridPage : Page
     {
-        private ObservableCollection<SubredditViewModel> SubReddits { get; } = new ObservableCollection<SubredditViewModel>();
+        private ObservableCollection<PostOrSubRedditDataViewModel> SubReddits { get; } = new ObservableCollection<PostOrSubRedditDataViewModel>();
         private readonly Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
         private readonly Landing landing = new Landing();
 
-        public LandingPage()
+        public SubredditGridPage()
         {
             this.InitializeComponent();
             LoadData();
@@ -44,7 +42,7 @@ namespace SnooViewer.Pages
             //Read the file
             string text = await Windows.Storage.FileIO.ReadTextAsync(subredditFile);
 
-            List<SubredditViewModel> retrievedSubReddits;
+            List<PostOrSubRedditDataViewModel> retrievedSubReddits;
             if (text == null || text == string.Empty)
             {
                 retrievedSubReddits = (await landing.GetSubscribedSubreddits(LibSnoo.Models.DataContext.Token)).OrderBy(x => x.Url).ToList();
@@ -52,7 +50,7 @@ namespace SnooViewer.Pages
             }
             else
             {
-                retrievedSubReddits = JsonConvert.DeserializeObject<List<SubredditViewModel>>(text).OrderBy(x => x.Url).ToList();
+                retrievedSubReddits = JsonConvert.DeserializeObject<List<PostOrSubRedditDataViewModel>>(text).OrderBy(x => x.Url).ToList();
             }
 
             foreach (var subreddit in retrievedSubReddits)
@@ -63,6 +61,11 @@ namespace SnooViewer.Pages
             }
 
             loadingRing.IsActive = false;
+        }
+
+        private void SubredditList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            contentFrame.Navigate(typeof(SubredditPage), (e.ClickedItem as PostOrSubRedditDataViewModel).DisplayName);
         }
     }
 }

@@ -8,9 +8,6 @@ namespace LibSnoo.Models
         public string Kind { get; set; }
 
         [JsonProperty("data")]
-        public SubredditViewModel Subreddit { get; set; }
-
-        [JsonProperty("data")]
-        public PostViewModel Post { get; set; }
+        public PostOrSubRedditDataViewModel Data { get; set; }
     }
 }

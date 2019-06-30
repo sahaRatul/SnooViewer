@@ -132,9 +132,10 @@
     <Compile Include="Models\FeaturesViewModel.cs" />
     <Compile Include="Models\KindViewModel.cs" />
     <Compile Include="Models\PostViewModel.cs" />
-    <Compile Include="Models\SubredditViewModel.cs" />
+    <Compile Include="Models\PostOrSubRedditDataViewModel.cs" />
     <Compile Include="Models\UserFlairRichtextViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
+    <Compile Include="SubredditPostList.cs" />
     <Compile Include="Utils\HttpClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\LibSnoo.rd.xml" />
