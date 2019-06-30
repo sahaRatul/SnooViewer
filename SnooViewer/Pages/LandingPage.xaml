@@ -10,13 +10,13 @@
     Background="{ThemeResource SystemControlAcrylicWindowBrush}">
 
     <Grid>
-        <TextBlock x:Name="userName" Text="" TextAlignment="Center" TextWrapping="NoWrap" VerticalAlignment="Top" Height="139" FontSize="60" FontFamily="Segoe UI" Margin="0,20,0,0"/>
-        <ProgressRing x:Name="loadingRing" Height="133" Width="133"/>
-        <GridView x:Name="subredditList" ItemsSource="{x:Bind SubReddits}" Margin="0,180,0,40" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <TextBlock x:Name="headertext" Text="Your subreddits" TextAlignment="Left" TextWrapping="NoWrap" VerticalAlignment="Top" Height="70" FontSize="40" FontFamily="Segoe UI" Margin="40,20,0,0"/>
+
+        <GridView x:Name="subredditList" ItemsSource="{x:Bind SubReddits}" Margin="0,100,0,20" HorizontalAlignment="Center" VerticalAlignment="Top">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="data:SubredditViewModel" >
                     <Grid Margin="2" Background="{x:Bind KeyColor}">
-                        <StackPanel HorizontalAlignment="Center" Height="130" Width="260" Padding="10 35 10 20">
+                        <StackPanel HorizontalAlignment="Center" Height="130" Width="280" Padding="10 35 10 20">
                             <TextBlock TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center" Text="{x:Bind Url}" Foreground="White" FontSize="25" Grid.Column="1"/>
                             <TextBlock TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center" Text="{x:Bind Title}" Foreground="White" FontSize="15" Grid.Column="1"/>
                         </StackPanel>
@@ -24,11 +24,6 @@
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
-        <TextBox x:Name="searchBox" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,115,0,0" Text="" Height="32" Width="395" PlaceholderText="Search or Filter subs"/>
-        <StackPanel Margin="0 0 0 5" VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
-            <TextBlock Margin="5" FontSize="15" x:Name="redditorFrom" Text="Redditor Since: 10 July, 2018" />
-            <TextBlock Margin="5" FontSize="15" x:Name="linkKarma" Text="20000 Link Karma"/>
-            <TextBlock Margin="5" FontSize="15" x:Name="commentKarma" Text="30000 Comment Karma"/>
-        </StackPanel>
+        <ProgressRing x:Name="loadingRing" Height="133" Width="133"/>
     </Grid>
 </Page>

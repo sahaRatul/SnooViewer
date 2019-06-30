@@ -29,8 +29,6 @@ namespace SnooViewer.Pages
         private async void LoadData()
         {
             loadingRing.IsActive = true;
-            searchBox.Visibility = redditorFrom.Visibility = commentKarma.Visibility = linkKarma.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-            var userDetails = await landing.GetUserDetails(LibSnoo.Models.DataContext.Token);
             Windows.Storage.StorageFile subredditFile;
 
             //Retrieve from storage if available
@@ -65,11 +63,6 @@ namespace SnooViewer.Pages
             }
 
             loadingRing.IsActive = false;
-            userName.Text = "Hi, " + userDetails.Name + "!";
-            redditorFrom.Text = DateTimeOffset.FromUnixTimeSeconds(userDetails.CreatedUtc).UtcDateTime.ToString();
-            linkKarma.Text = userDetails.LinkKarma.ToString();
-            commentKarma.Text = userDetails.CommentKarma.ToString();
-            searchBox.Visibility = redditorFrom.Visibility = commentKarma.Visibility = linkKarma.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
     }
 }
