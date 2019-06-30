@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using Windows.UI.ViewManagement;
 using Windows.Foundation;
+using Windows.UI.Xaml.Navigation;
 
 namespace SnooViewer
 {
@@ -25,9 +26,11 @@ namespace SnooViewer
             if ((string)localSettings.Values["refresh_token"] != null || (string)localSettings.Values["refresh_token"] != string.Empty)
             {
                 RefreshToken();
+                loginView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             }
             else
             {
+                navBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 GenerateToken();
             }
         }
@@ -46,7 +49,8 @@ namespace SnooViewer
             var result = await login.Login_Refresh((string)localSettings.Values["refresh_token"]);
             LibSnoo.Models.DataContext.Token = result.AccessToken;
             LibSnoo.Models.DataContext.RefreshToken = result.RefreshToken;
-            this.Frame.Navigate(typeof(Pages.LandingPage));
+            //contentFrame.Navigate(typeof(Pages.LandingPage));
+            //this.Frame.Navigate(typeof(Pages.LandingPage));
         }
 
         private async void LoginView_NavigationStarting(WebView _, WebViewNavigationStartingEventArgs args)
@@ -59,7 +63,30 @@ namespace SnooViewer
                 args.Cancel = true;
                 this.Frame.Navigate(typeof(Pages.LandingPage));
                 localSettings.Values["refresh_token"] = LibSnoo.Models.DataContext.RefreshToken;
+                navBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                loginView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                contentFrame.Navigate(typeof(Pages.LandingPage));
             }
+        }
+
+        private void NavBar_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        {
+            FrameNavigationOptions navOptions = new FrameNavigationOptions();
+            navOptions.TransitionInfoOverride = args.RecommendedNavigationTransitionInfo;
+            Type pageType = null;
+            if(args.IsSettingsInvoked)
+            {
+                pageType = typeof(Pages.SettingsPage);
+            }
+            else if ((string)args.InvokedItem == "My Subreddits")
+            {
+                pageType = typeof(Pages.LandingPage);
+            }
+            else if ((string)args.InvokedItem == "Profile")
+            {
+                pageType = typeof(Pages.UserPage);
+            }
+            contentFrame.NavigateToType(pageType, null, navOptions);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace SnooViewer.Pages
         private async void LoadData()
         {
             loadingRing.IsActive = true;
-            searchBox.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            searchBox.Visibility = redditorFrom.Visibility = commentKarma.Visibility = linkKarma.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             var userDetails = await landing.GetUserDetails(LibSnoo.Models.DataContext.Token);
             Windows.Storage.StorageFile subredditFile;
 
@@ -60,12 +60,16 @@ namespace SnooViewer.Pages
             foreach (var subreddit in retrievedSubReddits)
             {
                 subreddit.KeyColor = subreddit.KeyColor == "" ? subreddit.PrimaryColor == "" ? "#111111" : subreddit.PrimaryColor : subreddit.KeyColor;
+                subreddit.KeyColor = subreddit.KeyColor == "#ffffff" ? "#111111" : subreddit.KeyColor;
                 SubReddits.Add(subreddit);
             }
 
             loadingRing.IsActive = false;
             userName.Text = "Hi, " + userDetails.Name + "!";
-            searchBox.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            redditorFrom.Text = DateTimeOffset.FromUnixTimeSeconds(userDetails.CreatedUtc).UtcDateTime.ToString();
+            linkKarma.Text = userDetails.LinkKarma.ToString();
+            commentKarma.Text = userDetails.CommentKarma.ToString();
+            searchBox.Visibility = redditorFrom.Visibility = commentKarma.Visibility = linkKarma.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
     }
 }

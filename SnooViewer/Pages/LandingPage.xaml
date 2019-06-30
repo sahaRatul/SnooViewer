@@ -7,12 +7,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:data="using:LibSnoo.Models"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource SystemControlAcrylicWindowBrush}">
 
     <Grid>
         <TextBlock x:Name="userName" Text="" TextAlignment="Center" TextWrapping="NoWrap" VerticalAlignment="Top" Height="139" FontSize="60" FontFamily="Segoe UI" Margin="0,20,0,0"/>
         <ProgressRing x:Name="loadingRing" Height="133" Width="133"/>
-        <GridView x:Name="subredditList" ItemsSource="{x:Bind SubReddits}" Margin="0,200,0,20" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+        <GridView x:Name="subredditList" ItemsSource="{x:Bind SubReddits}" Margin="0,180,0,40" HorizontalAlignment="Center" VerticalAlignment="Top">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="data:SubredditViewModel" >
                     <Grid Margin="2" Background="{x:Bind KeyColor}">
@@ -24,6 +24,11 @@
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
-        <TextBox x:Name="searchBox" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,120,0,0" Text="" Height="32" Width="395" PlaceholderText="Search or Filter subs"/>
+        <TextBox x:Name="searchBox" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,115,0,0" Text="" Height="32" Width="395" PlaceholderText="Search or Filter subs"/>
+        <StackPanel Margin="0 0 0 5" VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
+            <TextBlock Margin="5" FontSize="15" x:Name="redditorFrom" Text="Redditor Since: 10 July, 2018" />
+            <TextBlock Margin="5" FontSize="15" x:Name="linkKarma" Text="20000 Link Karma"/>
+            <TextBlock Margin="5" FontSize="15" x:Name="commentKarma" Text="30000 Comment Karma"/>
+        </StackPanel>
     </Grid>
 </Page>

@@ -9,6 +9,13 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <NavigationView Background="{ThemeResource AppBarBackgroundThemeBrush}" x:Name="navBar" SelectionFollowsFocus="Enabled" ItemInvoked="NavBar_ItemInvoked">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Icon="Play" Content="My Subreddits" x:Name="SubredditPage" />
+                <NavigationViewItem Icon="Contact" Content="Profile" x:Name="ProfilePage" />
+            </NavigationView.MenuItems>
+            <Frame x:Name="contentFrame"/>
+        </NavigationView>
         <WebView x:Name="loginView" NavigationStarting="LoginView_NavigationStarting" RequestedTheme="Dark" MaxWidth="1920" MaxHeight="1080"/>
     </Grid>
 </Page>
