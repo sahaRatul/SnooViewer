@@ -13,8 +13,10 @@ namespace SnooViewer.Pages
     public sealed partial class SubredditPage : Page
     {
         private readonly SubredditPostList subPosts = new SubredditPostList();
-        private string selectedSubreddit = "all";
+        public PostOrSubRedditDataViewModel selectedSubreddit = null;
         private readonly ObservableCollection<PostOrSubRedditDataViewModel> posts = new ObservableCollection<PostOrSubRedditDataViewModel>();
+        //private string headerText = "";
+
         public SubredditPage()
         {
             this.InitializeComponent();
@@ -25,7 +27,7 @@ namespace SnooViewer.Pages
             loadingRing.IsActive = true;
             loadingRing.Visibility = Windows.UI.Xaml.Visibility.Visible;
             postList.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-            var posts = await subPosts.GetSubredditPosts(subreddit: selectedSubreddit, token: LibSnoo.Models.DataContext.Token , limit: 25);
+            var posts = await subPosts.GetSubredditPosts(subreddit: selectedSubreddit.DisplayName, token: LibSnoo.Models.DataContext.Token , limit: 25);
             foreach(PostOrSubRedditDataViewModel post in posts)
             {
                 this.posts.Add(post);
@@ -38,8 +40,8 @@ namespace SnooViewer.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            selectedSubreddit = (e.Parameter as string) != null || (e.Parameter as string) != string.Empty ? e.Parameter as string : "all";
-            headerText.Text = "/r/" + selectedSubreddit;
+            selectedSubreddit = (e.Parameter as PostOrSubRedditDataViewModel) != null ? (e.Parameter as PostOrSubRedditDataViewModel) : new PostOrSubRedditDataViewModel { DisplayName = "all"};
+            postList.Header = selectedSubreddit;
         }
 
         private async void SubredditPage_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)

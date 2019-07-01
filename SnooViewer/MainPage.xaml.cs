@@ -4,6 +4,7 @@ using LibSnoo;
 using LibSnoo.Constants;
 using System.Linq;
 using System.Web;
+using LibSnoo.Models;
 using Windows.UI.ViewManagement;
 using Windows.Foundation;
 using Windows.UI.Xaml.Navigation;
@@ -73,11 +74,12 @@ namespace SnooViewer
             if(args.IsSettingsInvoked)
             {
                 pageType = typeof(Pages.SettingsPage);
+                contentFrame.NavigateToType(pageType, null, navOptions);
             }
             else if ((string)args.InvokedItem == "Front Page")
             {
                 pageType = typeof(Pages.SubredditPage);
-                contentFrame.NavigateToType(pageType, "all", navOptions);
+                contentFrame.NavigateToType(pageType, new PostOrSubRedditDataViewModel { DisplayName = "all" }, navOptions);
             }
             else if ((string)args.InvokedItem == "My Subreddits")
             {

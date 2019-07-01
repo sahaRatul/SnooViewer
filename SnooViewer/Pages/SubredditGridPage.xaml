@@ -7,17 +7,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:data="using:LibSnoo.Models"
     mc:Ignorable="d"
-    Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+    Background="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}">
 
     <Grid>
         <TextBlock x:Name="headertext" VerticalAlignment="Top" Text="Your subreddits" FontWeight="Thin" TextAlignment="Left" Margin="25 10 10 10" TextWrapping="NoWrap" Height="75" FontSize="40"/>
         <GridView SelectionMode="None" IsItemClickEnabled="True" x:Name="subredditList" ItemsSource="{x:Bind SubReddits}" Margin="0,75,0,20" HorizontalAlignment="Center" VerticalAlignment="Top" ItemClick="SubredditList_ItemClick">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="data:PostOrSubRedditDataViewModel" >
-                    <Grid Margin="2" Background="{x:Bind KeyColor}">
+                    <Grid Margin="2" Background="{ThemeResource SystemControlAcrylicElementBrush}">
                         <StackPanel HorizontalAlignment="Stretch" Height="135" Width="280" Padding="10 35 10 20">
-                            <TextBlock TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center" Text="{x:Bind Url}" Foreground="White" FontSize="25" Grid.Column="1"/>
-                            <TextBlock TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center" FontWeight="Thin"  Text="{x:Bind Title}" Foreground="White" FontSize="15" Grid.Column="1"/>
+                            <TextBlock TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center" Text="{x:Bind Url}" FontSize="25" Grid.Column="1"/>
+                            <TextBlock TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center" FontWeight="Thin"  Text="{x:Bind Title}" FontSize="15" Grid.Column="1"/>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

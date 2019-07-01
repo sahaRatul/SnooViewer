@@ -65,7 +65,7 @@ namespace SnooViewer.Pages
 
         private void SubredditList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            contentFrame.Navigate(typeof(SubredditPage), (e.ClickedItem as PostOrSubRedditDataViewModel).DisplayName);
+            contentFrame.Navigate(typeof(SubredditPage), e.ClickedItem);
         }
     }
 }
