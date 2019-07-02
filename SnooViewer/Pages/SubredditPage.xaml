@@ -9,7 +9,7 @@
     xmlns:utils="using:LibSnoo.Utils"
     xmlns:sys="using:System"
     mc:Ignorable="d"
-    Background="{ThemeResource SystemControlAcrylicWindowBrush}" Loaded="SubredditPage_Loaded">
+    Background="{ThemeResource SystemControlAcrylicWindowBrush}">
 
     <Grid>
         <ListView HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="postList" ItemsSource="{x:Bind posts}">
@@ -21,7 +21,7 @@
             <ListView.HeaderTemplate>
                 <DataTemplate x:DataType="data:PostOrSubRedditDataViewModel">
                     <Grid Padding="5">
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind DisplayName}" x:Name="headerText" FontWeight="Thin" TextAlignment="Left" Margin="15 0 15 0" TextWrapping="NoWrap" FontSize="40"/>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind Url}" x:Name="headerText" FontWeight="Thin" TextAlignment="Left" Margin="15 0 15 0" TextWrapping="NoWrap" FontSize="40"/>
                         <Image HorizontalAlignment="Right" Source="{x:Bind IconImg}" Height="70" Width="70" Margin="0 0 15 0"/>
                     </Grid>
                 </DataTemplate>

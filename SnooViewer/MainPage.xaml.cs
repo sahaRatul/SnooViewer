@@ -79,7 +79,7 @@ namespace SnooViewer
             else if ((string)args.InvokedItem == "Front Page")
             {
                 pageType = typeof(Pages.SubredditPage);
-                contentFrame.NavigateToType(pageType, new PostOrSubRedditDataViewModel { DisplayName = "all" }, navOptions);
+                contentFrame.NavigateToType(pageType, new PostOrSubRedditDataViewModel { DisplayName = "all", Url = "/r/all" }, navOptions);
             }
             else if ((string)args.InvokedItem == "My Subreddits")
             {
