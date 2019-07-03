@@ -9,24 +9,36 @@
     xmlns:utils="using:LibSnoo.Utils"
     xmlns:sys="using:System"
     mc:Ignorable="d"
-    Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+    Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
 
-    <Grid>
-        <TextBlock x:Name="headertext" VerticalAlignment="Top" Text="Your subreddits" FontWeight="Thin" TextAlignment="Left" Margin="25 10 10 10" TextWrapping="NoWrap" Height="75" FontSize="40"/>
-        <GridView SelectionMode="None" IsItemClickEnabled="True" x:Name="subredditList" ItemsSource="{x:Bind SubReddits}" Margin="0,75,0,20" HorizontalAlignment="Center" VerticalAlignment="Top" ItemClick="SubredditList_ItemClick">
-            <GridView.ItemTemplate>
-                <DataTemplate x:DataType="data:PostOrSubRedditDataViewModel" >
-                    <Grid Margin="10" Background="{ThemeResource SystemAltHighColor}">
-                        <StackPanel HorizontalAlignment="Stretch" Height="135" Width="250" Padding="10 10 10 20">
-                            <Image HorizontalAlignment="Center" VerticalAlignment="Top" Source="{x:Bind IconImg}" Height="60" Width="60"/>
-                            <TextBlock Foreground="{ThemeResource SystemAccentColor}" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center" Text="{x:Bind Url}" FontSize="25" Grid.Column="1"/>
-                            <TextBlock x:Name="publicDesc" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center" FontWeight="Thin" Text="{x:Bind PublicDescription}" FontSize="15" Grid.Column="1"/>
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </GridView.ItemTemplate>
-        </GridView>
-        <Frame x:Name="contentFrame"/>
-        <ProgressRing x:Name="loadingRing" Height="133" Width="133"/>
-    </Grid>
+    <SplitView x:Name="splitView" PaneBackground="{ThemeResource SystemControlAccentDark2AcrylicWindowAccentDark2MediumHighBrush}" IsPaneOpen="True" OpenPaneLength="220" CompactPaneLength="65" DisplayMode="CompactInline">
+        <SplitView.Pane>
+            <ListView SelectionMode="Single" IsItemClickEnabled="True" x:Name="subredditList" ItemsSource="{x:Bind SubReddits}" ItemClick="SubredditList_ItemClick">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel AreStickyGroupHeadersEnabled="True"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="data:PostOrSubRedditDataViewModel" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                            </Grid.RowDefinitions>
+                            <Image Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Source="{x:Bind IconImg}" Height="40" Width="40" Margin="0 5 0 5"/>
+                            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" TextTrimming="CharacterEllipsis" Text="{x:Bind DisplayName}" FontSize="20" Margin="5 0 0 0"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </SplitView.Pane>
+        <Grid>
+            <Frame x:Name="contentFrame"/>
+            <ProgressRing x:Name="loadingRing" Height="133" Width="133"/>
+        </Grid>
+    </SplitView>
 </Page>

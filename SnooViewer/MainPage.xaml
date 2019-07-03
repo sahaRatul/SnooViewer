@@ -2,17 +2,19 @@
     x:Class="SnooViewer.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SnooViewer"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <NavigationView PaneDisplayMode="Left" OpenPaneLength="180" Background="{ThemeResource AppBarBackgroundThemeBrush}" x:Name="navBar" SelectionFollowsFocus="Enabled" ItemInvoked="NavBar_ItemInvoked">
+        <NavigationView PaneDisplayMode="Top" OpenPaneLength="180" Background="{ThemeResource AppBarBackgroundThemeBrush}" x:Name="navBar" SelectionFollowsFocus="Enabled" ItemInvoked="NavBar_ItemInvoked">
+            <NavigationView.AutoSuggestBox>
+                <AutoSuggestBox PlaceholderText="Search" QueryIcon="Find" Width="200" />
+            </NavigationView.AutoSuggestBox>
             <NavigationView.MenuItems>
-                <NavigationViewItem Icon="Link" Content="Front Page" x:Name="FrontPage" />
                 <NavigationViewItem Icon="Play" Content="My Subreddits" x:Name="SubredditPage" />
+                <NavigationViewItem Icon="Link" Content="Front Page" x:Name="FrontPage" />
                 <NavigationViewItem Icon="Contact" Content="Profile" x:Name="ProfilePage" />
             </NavigationView.MenuItems>
             <Frame x:Name="contentFrame"/>

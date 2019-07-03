@@ -9,7 +9,7 @@
     xmlns:utils="using:LibSnoo.Utils"
     xmlns:sys="using:System"
     mc:Ignorable="d"
-    Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+    Background="{ThemeResource SystemControlChromeMediumAcrylicWindowMediumBrush}">
 
     <Grid>
         <ListView HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="postList" ItemsSource="{x:Bind posts}">
@@ -30,14 +30,14 @@
                 <DataTemplate x:DataType="data:PostOrSubRedditDataViewModel" >
                     <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="2" BorderBrush="Black">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="70" />
+                            <ColumnDefinition Width="{x:Bind utils:Utils.GetColWidth(70, Thumbnail)}" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="90" />
                         </Grid.RowDefinitions>
-                        <Image HorizontalAlignment="Right" Source="{x:Bind Thumbnail}" Width="70" Height="70" Grid.Column="0" Grid.Row="0" />
-                        <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Height="90" Padding="10 7 10 10">
+                        <Image Visibility="{x:Bind utils:Utils.IsImageVisible(Thumbnail)}" HorizontalAlignment="Right" Source="{x:Bind Thumbnail}" Width="70" Height="70" Grid.Column="0" Grid.Row="0" />
+                        <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Height="85" Padding="10 0 10 5">
                             <TextBlock TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Text="{x:Bind Title}" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" FontSize="20"/>
                             <TextBlock TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Text="{x:Bind Url}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" FontSize="15"/>
                             <StackPanel Padding="3" Margin="0 5 0 0" Background="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush}" Orientation="Horizontal" HorizontalAlignment="Left">

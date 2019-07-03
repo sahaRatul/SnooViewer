@@ -5,8 +5,6 @@ using LibSnoo.Constants;
 using System.Linq;
 using System.Web;
 using LibSnoo.Models;
-using Windows.UI.ViewManagement;
-using Windows.Foundation;
 using Windows.UI.Xaml.Navigation;
 
 namespace SnooViewer
@@ -68,23 +66,25 @@ namespace SnooViewer
 
         private void NavBar_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
-            FrameNavigationOptions navOptions = new FrameNavigationOptions();
-            navOptions.TransitionInfoOverride = args.RecommendedNavigationTransitionInfo;
-            Type pageType = null;
-            if(args.IsSettingsInvoked)
+            FrameNavigationOptions navOptions = new FrameNavigationOptions
+            {
+                TransitionInfoOverride = args.RecommendedNavigationTransitionInfo
+            };
+            Type pageType;
+            if (args.IsSettingsInvoked)
             {
                 pageType = typeof(Pages.SettingsPage);
+                contentFrame.NavigateToType(pageType, null, navOptions);
+            }
+            else if ((string)args.InvokedItem == "My Subreddits")
+            {
+                pageType = typeof(Pages.SubredditGridPage);
                 contentFrame.NavigateToType(pageType, null, navOptions);
             }
             else if ((string)args.InvokedItem == "Front Page")
             {
                 pageType = typeof(Pages.SubredditPage);
                 contentFrame.NavigateToType(pageType, new PostOrSubRedditDataViewModel { DisplayName = "all", Url = "/r/all" }, navOptions);
-            }
-            else if ((string)args.InvokedItem == "My Subreddits")
-            {
-                pageType = typeof(Pages.SubredditGridPage);
-                contentFrame.NavigateToType(pageType, null, navOptions);
             }
             else if ((string)args.InvokedItem == "Profile")
             {
