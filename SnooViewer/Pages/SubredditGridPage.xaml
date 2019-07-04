@@ -11,7 +11,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
 
-    <SplitView x:Name="splitView" PaneBackground="{ThemeResource SystemControlAccentDark2AcrylicWindowAccentDark2MediumHighBrush}" IsPaneOpen="True" OpenPaneLength="220" CompactPaneLength="65" DisplayMode="CompactInline">
+    <SplitView x:Name="splitView" PaneBackground="{ThemeResource SystemControlAccentDark2AcrylicWindowAccentDark2MediumHighBrush}" IsPaneOpen="True" OpenPaneLength="250" CompactPaneLength="65" DisplayMode="CompactInline">
         <SplitView.Pane>
             <ListView SelectionMode="Single" IsItemClickEnabled="True" x:Name="subredditList" ItemsSource="{x:Bind SubReddits}" ItemClick="SubredditList_ItemClick">
                 <ListView.ItemsPanel>

@@ -8,11 +8,19 @@
     xmlns:data="using:LibSnoo.Models"
     xmlns:utils="using:LibSnoo.Utils"
     xmlns:sys="using:System"
+    xmlns:UWPToolKit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    Background="{ThemeResource SystemControlChromeMediumAcrylicWindowMediumBrush}">
+    Background="{ThemeResource SystemControlChromeLowAcrylicWindowBrush}">
 
     <Grid>
-        <ListView HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="postList" ItemsSource="{x:Bind posts}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="11" />
+            <ColumnDefinition Width="250" MaxWidth="350" MinWidth="100"/>
+        </Grid.ColumnDefinitions>
+
+        <!---Post List-->
+        <ListView Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="postList" ItemsSource="{x:Bind posts}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -22,7 +30,6 @@
                 <DataTemplate x:DataType="data:PostOrSubRedditDataViewModel">
                     <Grid Padding="5">
                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind Url}" x:Name="headerText" FontWeight="Thin" TextAlignment="Left" Margin="15 0 15 0" TextWrapping="NoWrap" FontSize="40"/>
-                        <Image HorizontalAlignment="Right" Source="{x:Bind IconImg}" Height="70" Width="70" Margin="0 0 15 0"/>
                     </Grid>
                 </DataTemplate>
             </ListView.HeaderTemplate>
@@ -50,6 +57,37 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ProgressRing x:Name="loadingRing" Height="133" Width="133"/>
+
+        <!---Separator-->
+        <UWPToolKit:GridSplitter Grid.Column="1" ResizeBehavior="BasedOnAlignment" ResizeDirection="Auto" Background="Gray" Foreground="White" FontSize="13">
+            <UWPToolKit:GridSplitter.Element>
+                <Grid>
+                    <TextBlock HorizontalAlignment="Center" IsHitTestVisible="False" Text="" Foreground="Black" FontFamily="Segoe MDL2 Assets">
+                    </TextBlock>
+                </Grid>
+            </UWPToolKit:GridSplitter.Element>
+        </UWPToolKit:GridSplitter>
+
+        <!---Subreddit details-->
+        <ScrollViewer Grid.Column="2">
+            <StackPanel Orientation="Vertical" Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}" Padding="0">
+                <Image HorizontalAlignment="Stretch" VerticalAlignment="Top" Source="{x:Bind selectedSubreddit.IconImg}" Height="100" Width="100" Margin="0 20 0 0"/>
+                <TextBlock FontSize="13" TextWrapping="WrapWholeWords" Text="{x:Bind selectedSubreddit.PublicDescription}" Margin="10"/>
+                <ListView SelectionMode="None" x:Name="rulesList" ItemsSource="{x:Bind rules}" Margin="0 20 0 0" VerticalAlignment="Stretch">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewHeaderItem">
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="data:SubredditRuleViewModel">
+                            <StackPanel>
+                                <TextBlock FontSize="15" TextTrimming="CharacterEllipsis" Text="{x:Bind ShortName}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

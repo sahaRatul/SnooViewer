@@ -120,6 +120,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ApiCalls.cs" />
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="IIncrementalSource.cs" />
     <Compile Include="IncrementalLoadingCollection.cs" />
@@ -133,8 +134,13 @@
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\FeaturesViewModel.cs" />
     <Compile Include="Models\KindViewModel.cs" />
+    <Compile Include="Models\NextStepReasonHeaderViewModel.cs" />
+    <Compile Include="Models\NextStepReasonLineViewModel.cs" />
     <Compile Include="Models\PostViewModel.cs" />
     <Compile Include="Models\PostOrSubRedditDataViewModel.cs" />
+    <Compile Include="Models\RulesViewModel.cs" />
+    <Compile Include="Models\SiteRulesFlowViewModel.cs" />
+    <Compile Include="Models\SubredditRuleViewModel.cs" />
     <Compile Include="Models\UserFlairRichtextViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="SubredditPostSource.cs" />
