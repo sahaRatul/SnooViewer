@@ -66,5 +66,10 @@ namespace SnooViewer.Pages
         {
             contentFrame.Navigate(typeof(SubredditPage), e.ClickedItem);
         }
+
+        private void OpenCloseButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            splitView.IsPaneOpen = !splitView.IsPaneOpen;
+        }
     }
 }

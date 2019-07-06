@@ -32,5 +32,22 @@ namespace SnooViewer.Pages
             postList.Header = selectedSubreddit;
             posts.SubReddit = selectedSubreddit.DisplayName;
         }
+
+        private void HeaderText_Tapped(object _, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            if(selectedSubreddit.DisplayName != "all")
+            {
+                if (sidebarColDef.Width.Value == 0)
+                {
+                    resizerColDef.Width = new Windows.UI.Xaml.GridLength(11);
+                    sidebarColDef.Width = new Windows.UI.Xaml.GridLength(250);
+                }
+                else
+                {
+                    resizerColDef.Width = new Windows.UI.Xaml.GridLength(0);
+                    sidebarColDef.Width = new Windows.UI.Xaml.GridLength(0);
+                }
+            }
+        }
     }
 }
