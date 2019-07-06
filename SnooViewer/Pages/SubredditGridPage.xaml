@@ -24,7 +24,7 @@
                         </ListView.ItemsPanel>
 
                         <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="data:PostOrSubRedditDataViewModel" >
+                            <DataTemplate x:DataType="data:MainDataViewModel" >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="50" />

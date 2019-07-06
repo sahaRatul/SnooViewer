@@ -14,7 +14,7 @@ namespace SnooViewer.Pages
     /// </summary>
     public sealed partial class SubredditGridPage : Page
     {
-        private ObservableCollection<PostOrSubRedditDataViewModel> SubReddits { get; } = new ObservableCollection<PostOrSubRedditDataViewModel>();
+        private ObservableCollection<MainDataViewModel> SubReddits { get; } = new ObservableCollection<MainDataViewModel>();
         private readonly Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
         private readonly Landing landing = new Landing();
 
@@ -42,7 +42,7 @@ namespace SnooViewer.Pages
             //Read the file
             string text = await Windows.Storage.FileIO.ReadTextAsync(subredditFile);
 
-            List<PostOrSubRedditDataViewModel> retrievedSubReddits;
+            List<MainDataViewModel> retrievedSubReddits;
             if (text == null || text == string.Empty)
             {
                 retrievedSubReddits = (await landing.GetSubscribedSubreddits(LibSnoo.Models.DataContext.Token)).OrderBy(x => x.Url).ToList();
@@ -50,7 +50,7 @@ namespace SnooViewer.Pages
             }
             else
             {
-                retrievedSubReddits = JsonConvert.DeserializeObject<List<PostOrSubRedditDataViewModel>>(text).OrderBy(x => x.Url).ToList();
+                retrievedSubReddits = JsonConvert.DeserializeObject<List<MainDataViewModel>>(text).OrderBy(x => x.Url).ToList();
             }
 
             foreach (var subreddit in retrievedSubReddits)

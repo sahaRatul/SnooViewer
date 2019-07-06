@@ -1,5 +1,6 @@
 ﻿using LibSnoo;
 using LibSnoo.Models;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -10,20 +11,21 @@ namespace SnooViewer.Pages
     /// </summary>
     public sealed partial class SubredditPage : Page
     {
-        readonly IncrementalLoadingCollection<SubredditPostSource, PostOrSubRedditDataViewModel> posts = null;
-        public PostOrSubRedditDataViewModel selectedSubreddit = null;
+        readonly IncrementalLoadingCollection<SubredditPostSource, MainDataViewModel> posts = null;
+        public MainDataViewModel selectedSubreddit = null;
         public ApiCalls ApiCalls;
+
         public SubredditPage()
         {
             this.InitializeComponent();
-            posts = new IncrementalLoadingCollection<SubredditPostSource, PostOrSubRedditDataViewModel>(LibSnoo.Models.DataContext.Token);
+            posts = new IncrementalLoadingCollection<SubredditPostSource, MainDataViewModel>(LibSnoo.Models.DataContext.Token);
             ApiCalls = new ApiCalls();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            selectedSubreddit = e.Parameter as PostOrSubRedditDataViewModel ?? new PostOrSubRedditDataViewModel { DisplayName = "all", Url = "/r/all", IconImg = "ms-appx:///Assets/RedditLogo.png", Description = "" };
+            selectedSubreddit = e.Parameter as MainDataViewModel ?? new MainDataViewModel { DisplayName = "all", Url = "/r/all", IconImg = "ms-appx:///Assets/RedditLogo.png", Description = "" };
             if (selectedSubreddit.DisplayName == "all")
             {
                 subRedditPageGrid.Children.Remove(separator);
@@ -39,15 +41,30 @@ namespace SnooViewer.Pages
             {
                 if (sidebarColDef.Width.Value == 0)
                 {
-                    resizerColDef.Width = new Windows.UI.Xaml.GridLength(11);
-                    sidebarColDef.Width = new Windows.UI.Xaml.GridLength(250);
+                    resizerColDef.Width = new GridLength(11);
+                    sidebarColDef.Width = new GridLength(250);
                 }
                 else
                 {
-                    resizerColDef.Width = new Windows.UI.Xaml.GridLength(0);
-                    sidebarColDef.Width = new Windows.UI.Xaml.GridLength(0);
+                    resizerColDef.Width = new GridLength(0);
+                    sidebarColDef.Width = new GridLength(0);
                 }
             }
+        }
+
+        private void PostList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if(postColDef.Width.Value == 0)
+            {
+                anotherResizerColDef.Width = new GridLength(20);
+                postColDef.Width = new GridLength(1, GridUnitType.Star);
+            }
+            else
+            {
+                anotherResizerColDef.Width = new GridLength(0);
+                postColDef.Width = new GridLength(0);
+            }
+            postFrame.Navigate(typeof(PostPage), e.ClickedItem);
         }
     }
 }

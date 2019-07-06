@@ -129,6 +129,7 @@
     <Compile Include="Models\AuthRequestModel.cs" />
     <Compile Include="Models\AuthViewModel.cs" />
     <Compile Include="Models\ChildViewModel.cs" />
+    <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\DataViewModel.cs" />
     <Compile Include="Models\Enums.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="Models\SubredditRuleViewModel.cs" />
     <Compile Include="Models\UserFlairRichtextViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
+    <Compile Include="PostCommentSource.cs" />
     <Compile Include="SubredditPostSource.cs" />
     <Compile Include="Utils\HttpClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

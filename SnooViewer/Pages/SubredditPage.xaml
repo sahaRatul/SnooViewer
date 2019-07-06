@@ -13,13 +13,15 @@
 
     <Grid x:Name="subRedditPageGrid">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="postListColDef" Width="*"/>
+            <ColumnDefinition x:Name="postListColDef" MinWidth="500" Width="*"/>
+            <ColumnDefinition x:Name="anotherResizerColDef" Width="0" />
+            <ColumnDefinition x:Name="postColDef" Width="0"/>
             <ColumnDefinition x:Name="resizerColDef" Width="0" />
             <ColumnDefinition x:Name="sidebarColDef" Width="0" MaxWidth="350"/>
         </Grid.ColumnDefinitions>
 
         <!---Post List-->
-        <ListView Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="postList" ItemsSource="{x:Bind posts}">
+        <ListView Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="postList" ItemsSource="{x:Bind posts}" SelectionMode="Single" IsItemClickEnabled="True" ItemClick="PostList_ItemClick">
             <!--List Styles-->
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
@@ -29,7 +31,7 @@
 
             <!--List Header-->
             <ListView.HeaderTemplate>
-                <DataTemplate x:DataType="data:PostOrSubRedditDataViewModel">
+                <DataTemplate x:DataType="data:MainDataViewModel">
                     <Grid Padding="5" Margin="0 10 0 10">
                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind Url}" x:Name="headerText" FontWeight="Thin" TextAlignment="Left" Margin="15 0 15 0" TextWrapping="NoWrap" FontSize="40" Tapped="HeaderText_Tapped"/>
                     </Grid>
@@ -38,7 +40,7 @@
 
             <!--List Items-->
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="data:PostOrSubRedditDataViewModel" >
+                <DataTemplate x:DataType="data:MainDataViewModel" >
                     <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="2" BorderBrush="Black">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="{x:Bind utils:Utils.GetColWidth(70, Thumbnail)}" />
@@ -63,7 +65,21 @@
         </ListView>
 
         <!---Separator-->
-        <UWPToolKit:GridSplitter Grid.Column="1" x:Name="separator" ResizeBehavior="BasedOnAlignment" ResizeDirection="Auto" Background="Gray" Foreground="White" FontSize="13">
+        <UWPToolKit:GridSplitter Grid.Column="1" x:Name="anotherSeparator" ResizeBehavior="BasedOnAlignment" ResizeDirection="Auto" Background="Gray" Foreground="White" FontSize="13">
+            <UWPToolKit:GridSplitter.Element>
+                <Grid>
+                    <TextBlock HorizontalAlignment="Center" IsHitTestVisible="False" Text="" Foreground="Black" FontFamily="Segoe MDL2 Assets" />
+                </Grid>
+            </UWPToolKit:GridSplitter.Element>
+        </UWPToolKit:GridSplitter>
+        
+        <!--Post details-->
+        <StackPanel Grid.Column="2" Orientation="Horizontal">
+            <Frame x:Name="postFrame"/>
+        </StackPanel>
+
+        <!---Separator-->
+        <UWPToolKit:GridSplitter Grid.Column="3" x:Name="separator" ResizeBehavior="BasedOnAlignment" ResizeDirection="Auto" Background="Gray" Foreground="White" FontSize="13">
             <UWPToolKit:GridSplitter.Element>
                 <Grid>
                     <TextBlock HorizontalAlignment="Center" IsHitTestVisible="False" Text="" Foreground="Black" FontFamily="Segoe MDL2 Assets" />
@@ -72,7 +88,7 @@
         </UWPToolKit:GridSplitter>
 
         <!---Subreddit details-->
-        <ScrollViewer Grid.Column="2" Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}" x:Name="sideBar">
+        <ScrollViewer Grid.Column="4" Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}" x:Name="sideBar">
             <StackPanel Orientation="Vertical" Padding="0">
                 <Image HorizontalAlignment="Stretch" VerticalAlignment="Top" Source="{x:Bind selectedSubreddit.IconImg}" Height="100" Width="100" Margin="0 20 0 0"/>
                 <UWPToolKit:MarkdownTextBlock Margin="10" Background="{ThemeResource SystemControlTransparentBrush}" Text="{x:Bind selectedSubreddit.Description}" />

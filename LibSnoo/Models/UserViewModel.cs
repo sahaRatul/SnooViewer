@@ -30,7 +30,7 @@ namespace LibSnoo.Models
         public bool PrefShowTrending { get; set; }
 
         [JsonProperty("subreddit")]
-        public PostOrSubRedditDataViewModel Subreddit { get; set; }
+        public MainDataViewModel Subreddit { get; set; }
 
         [JsonProperty("is_sponsor")]
         public bool IsSponsor { get; set; }

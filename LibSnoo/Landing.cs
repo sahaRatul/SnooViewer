@@ -14,9 +14,9 @@ namespace LibSnoo
             httpClient = new HttpClient();
         }
 
-        public async Task<List<PostOrSubRedditDataViewModel>> GetSubscribedSubreddits(string token)
+        public async Task<List<MainDataViewModel>> GetSubscribedSubreddits(string token)
         {
-            return (await httpClient.GetAsync<KindViewModel>(Constants.Constants.redditOauthApiBaseUrl + "subreddits/mine/subscriber?limit=100", token)).Data.Children.Select(x => x.Data).ToList();
+            return (await httpClient.GetAsync<KindViewModel>(Constants.Constants.redditOauthApiBaseUrl + "subreddits/mine/subscriber?limit=100&raw_json=1", token)).Data.Children.Select(x => x.Data).ToList();
         }
     }
 }
