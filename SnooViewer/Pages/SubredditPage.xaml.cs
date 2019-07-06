@@ -35,7 +35,7 @@ namespace SnooViewer.Pages
 
         private void HeaderText_Tapped(object _, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            if(selectedSubreddit.DisplayName != "all")
+            if (selectedSubreddit.DisplayName != "all")
             {
                 if (sidebarColDef.Width.Value == 0)
                 {

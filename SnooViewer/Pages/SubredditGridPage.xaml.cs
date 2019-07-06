@@ -1,11 +1,11 @@
-﻿using System.Collections.ObjectModel;
-using Windows.UI.Xaml.Controls;
+﻿using LibSnoo;
 using LibSnoo.Models;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System;
-using LibSnoo;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using Windows.UI.Xaml.Controls;
 
 namespace SnooViewer.Pages
 {

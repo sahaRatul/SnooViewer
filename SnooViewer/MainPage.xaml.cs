@@ -1,10 +1,10 @@
-﻿using System;
-using Windows.UI.Xaml.Controls;
-using LibSnoo;
+﻿using LibSnoo;
 using LibSnoo.Constants;
+using LibSnoo.Models;
+using System;
 using System.Linq;
 using System.Web;
-using LibSnoo.Models;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace SnooViewer
