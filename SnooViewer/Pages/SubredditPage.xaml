@@ -12,7 +12,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource SystemControlChromeLowAcrylicWindowBrush}">
 
-    <Grid>
+    <Grid x:Name="subRedditPageGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="11" />
@@ -59,7 +59,7 @@
         </ListView>
 
         <!---Separator-->
-        <UWPToolKit:GridSplitter Grid.Column="1" ResizeBehavior="BasedOnAlignment" ResizeDirection="Auto" Background="Gray" Foreground="White" FontSize="13">
+        <UWPToolKit:GridSplitter Grid.Column="1" x:Name="separator" ResizeBehavior="BasedOnAlignment" ResizeDirection="Auto" Background="Gray" Foreground="White" FontSize="13">
             <UWPToolKit:GridSplitter.Element>
                 <Grid>
                     <TextBlock HorizontalAlignment="Center" IsHitTestVisible="False" Text="" Foreground="Black" FontFamily="Segoe MDL2 Assets">
@@ -69,24 +69,10 @@
         </UWPToolKit:GridSplitter>
 
         <!---Subreddit details-->
-        <ScrollViewer Grid.Column="2">
+        <ScrollViewer Grid.Column="2" x:Name="sideBar">
             <StackPanel Orientation="Vertical" Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}" Padding="0">
                 <Image HorizontalAlignment="Stretch" VerticalAlignment="Top" Source="{x:Bind selectedSubreddit.IconImg}" Height="100" Width="100" Margin="0 20 0 0"/>
-                <TextBlock FontSize="13" TextWrapping="WrapWholeWords" Text="{x:Bind selectedSubreddit.PublicDescription}" Margin="10"/>
-                <ListView SelectionMode="None" x:Name="rulesList" ItemsSource="{x:Bind rules}" Margin="0 20 0 0" VerticalAlignment="Stretch">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewHeaderItem">
-                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="data:SubredditRuleViewModel">
-                            <StackPanel>
-                                <TextBlock FontSize="15" TextTrimming="CharacterEllipsis" Text="{x:Bind ShortName}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <UWPToolKit:MarkdownTextBlock Margin="10" Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}" Text="{x:Bind selectedSubreddit.Description}" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

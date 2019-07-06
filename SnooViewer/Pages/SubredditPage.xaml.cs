@@ -26,13 +26,21 @@ namespace SnooViewer.Pages
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            selectedSubreddit = e.Parameter as PostOrSubRedditDataViewModel ?? new PostOrSubRedditDataViewModel { DisplayName = "all", Url = "/r/all" };
+            selectedSubreddit = e.Parameter as PostOrSubRedditDataViewModel ?? new PostOrSubRedditDataViewModel { DisplayName = "all", Url = "/r/all", IconImg = "ms-appx:///Assets/RedditLogo.png", Description = "" };
+            if(selectedSubreddit.DisplayName == "all")
+            {
+                subRedditPageGrid.Children.Remove(separator);
+                subRedditPageGrid.Children.Remove(sideBar);
+            }
             postList.Header = selectedSubreddit;
             posts.SubReddit = selectedSubreddit.DisplayName;
-            var globalRules = (await ApiCalls.GetRulesForSubreddit(LibSnoo.Models.DataContext.Token, selectedSubreddit.DisplayName));
-            foreach(var rule in globalRules.Rules)
+            if(selectedSubreddit.DisplayName != "all")
             {
-                rules.Add(rule);
+                var globalRules = (await ApiCalls.GetRulesForSubreddit(LibSnoo.Models.DataContext.Token, selectedSubreddit.DisplayName));
+                foreach (var rule in globalRules.Rules)
+                {
+                    rules.Add(rule);
+                }
             }
         }
     }
