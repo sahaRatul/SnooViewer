@@ -1,6 +1,5 @@
 ﻿using LibSnoo;
 using LibSnoo.Models;
-using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -13,35 +12,25 @@ namespace SnooViewer.Pages
     {
         readonly IncrementalLoadingCollection<SubredditPostSource, PostOrSubRedditDataViewModel> posts = null;
         public PostOrSubRedditDataViewModel selectedSubreddit = null;
-        public ObservableCollection<SubredditRuleViewModel> rules = null;
         public ApiCalls ApiCalls;
         public SubredditPage()
         {
             this.InitializeComponent();
             posts = new IncrementalLoadingCollection<SubredditPostSource, PostOrSubRedditDataViewModel>(LibSnoo.Models.DataContext.Token);
-            rules = new ObservableCollection<SubredditRuleViewModel>();
             ApiCalls = new ApiCalls();
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             selectedSubreddit = e.Parameter as PostOrSubRedditDataViewModel ?? new PostOrSubRedditDataViewModel { DisplayName = "all", Url = "/r/all", IconImg = "ms-appx:///Assets/RedditLogo.png", Description = "" };
-            if(selectedSubreddit.DisplayName == "all")
+            if (selectedSubreddit.DisplayName == "all")
             {
                 subRedditPageGrid.Children.Remove(separator);
                 subRedditPageGrid.Children.Remove(sideBar);
             }
             postList.Header = selectedSubreddit;
             posts.SubReddit = selectedSubreddit.DisplayName;
-            if(selectedSubreddit.DisplayName != "all")
-            {
-                var globalRules = (await ApiCalls.GetRulesForSubreddit(LibSnoo.Models.DataContext.Token, selectedSubreddit.DisplayName));
-                foreach (var rule in globalRules.Rules)
-                {
-                    rules.Add(rule);
-                }
-            }
         }
     }
 }

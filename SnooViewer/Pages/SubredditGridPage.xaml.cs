@@ -56,8 +56,6 @@ namespace SnooViewer.Pages
             foreach (var subreddit in retrievedSubReddits)
             {
                 subreddit.IconImg = subreddit.IconImg != string.Empty ? subreddit.IconImg : (subreddit.HeaderImg ?? "ms-appx:///Assets/RedditLogo.png");
-                subreddit.KeyColor = subreddit.KeyColor == "" ? subreddit.PrimaryColor == "" ? "#111111" : subreddit.PrimaryColor : subreddit.KeyColor;
-                subreddit.KeyColor = subreddit.KeyColor == "#ffffff" ? "#111111" : subreddit.KeyColor;
                 SubReddits.Add(subreddit);
             }
 
