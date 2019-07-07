@@ -534,7 +534,7 @@ namespace LibSnoo.Models
         public string LinkId { get; set; }
 
         [JsonProperty("replies")]
-        public List<KindViewModel> Replies { get; set; }
+        public KindViewModel Replies { get; set; }
 
         [JsonProperty("parent_id")]
         public string ParentId { get; set; }
@@ -562,5 +562,9 @@ namespace LibSnoo.Models
 
         [JsonProperty("depth")]
         public int? Depth { get; set; }
+
+        //FUCK Reddit's json format
+        public List<MainDataViewModel> RepliesShallow { get; set; }
+        public int? CommentDepth { get; set; }
     }
 }

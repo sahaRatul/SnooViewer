@@ -1,5 +1,8 @@
 ﻿using LibSnoo;
 using LibSnoo.Models;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -12,21 +15,28 @@ namespace SnooViewer.Pages
     /// </summary>
     public sealed partial class PostPage : Page
     {
-        private readonly IncrementalLoadingCollection<PostCommentSource, MainDataViewModel> commentList = null;
+        private readonly ObservableCollection<MainDataViewModel> commentTree = null;
+        private readonly ApiCalls apiCalls = null;
         private MainDataViewModel selectedPost = null;
 
         public PostPage()
         {
             this.InitializeComponent();
-            commentList = new IncrementalLoadingCollection<PostCommentSource, MainDataViewModel>(LibSnoo.Models.DataContext.Token);
+            commentTree = new ObservableCollection<MainDataViewModel>();
+            apiCalls = new ApiCalls();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
             selectedPost = e.Parameter as MainDataViewModel;
-            commentList.CommentId = selectedPost.Id;
-            commentList.SubReddit = selectedPost.Subreddit;
+            var commentList = await apiCalls.GetCommentsForPost(selectedPost.Id, LibSnoo.Models.DataContext.Token);
+
+            foreach(MainDataViewModel comment in commentList.GetRange(1, commentList.Count - 1))
+            {
+                commentTree.Add(comment);
+            }
         }
     }
 }

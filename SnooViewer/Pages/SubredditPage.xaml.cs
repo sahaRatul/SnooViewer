@@ -57,7 +57,7 @@ namespace SnooViewer.Pages
             if(postColDef.Width.Value == 0)
             {
                 anotherResizerColDef.Width = new GridLength(20);
-                postColDef.Width = new GridLength(1, GridUnitType.Star);
+                postColDef.Width = new GridLength(250, GridUnitType.Star);
             }
             else
             {

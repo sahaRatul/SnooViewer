@@ -138,13 +138,12 @@
     <Compile Include="Models\NextStepReasonHeaderViewModel.cs" />
     <Compile Include="Models\NextStepReasonLineViewModel.cs" />
     <Compile Include="Models\PostViewModel.cs" />
-    <Compile Include="Models\PostOrSubRedditDataViewModel.cs" />
+    <Compile Include="Models\MainDataViewModel.cs" />
     <Compile Include="Models\RulesViewModel.cs" />
     <Compile Include="Models\SiteRulesFlowViewModel.cs" />
     <Compile Include="Models\SubredditRuleViewModel.cs" />
     <Compile Include="Models\UserFlairRichtextViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
-    <Compile Include="PostCommentSource.cs" />
     <Compile Include="SubredditPostSource.cs" />
     <Compile Include="Utils\HttpClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

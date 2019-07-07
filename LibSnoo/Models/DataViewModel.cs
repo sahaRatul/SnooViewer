@@ -7,10 +7,10 @@ namespace LibSnoo.Models
     {
 
         [JsonProperty("modhash")]
-        public object Modhash { get; set; }
+        public string Modhash { get; set; }
 
         [JsonProperty("dist")]
-        public int Dist { get; set; }
+        public int? Dist { get; set; }
 
         [JsonProperty("children")]
         public IList<ChildViewModel> Children { get; set; }
@@ -19,6 +19,6 @@ namespace LibSnoo.Models
         public string After { get; set; }
 
         [JsonProperty("before")]
-        public object Before { get; set; }
+        public string Before { get; set; }
     }
 }
