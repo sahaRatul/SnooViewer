@@ -109,6 +109,18 @@ namespace RedditSharp.Things
         [JsonProperty("subreddit")]
         public string SubredditName { get; private set; }
 
+        /// <summary>
+        /// Votes count
+        /// </summary>
+        [JsonProperty("ups")]
+        public int Ups { get; set; }
+
+        /// <summary>
+        /// Post author
+        /// </summary>
+        [JsonProperty("author")]
+        public string Author { get; set; }
+
 
         /// <summary>
         /// Prefix for fullname. Includes trailing underscore

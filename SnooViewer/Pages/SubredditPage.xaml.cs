@@ -1,8 +1,8 @@
 ﻿using LibSnoo;
-using LibSnoo.Models;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using RedditSharp.Things;
 
 namespace SnooViewer.Pages
 {
@@ -11,28 +11,29 @@ namespace SnooViewer.Pages
     /// </summary>
     public sealed partial class SubredditPage : Page
     {
-        readonly IncrementalLoadingCollection<SubredditPostSource, MainDataViewModel> posts = null;
-        public MainDataViewModel selectedSubreddit = null;
+        private IncrementalLoadingCollection<SubredditPostSource, Post> posts = null;
+        public Subreddit selectedSubreddit = null;
         public ApiCalls ApiCalls;
         private object selectedItem = null;
 
         public SubredditPage()
         {
             this.InitializeComponent();
-            posts = new IncrementalLoadingCollection<SubredditPostSource, MainDataViewModel>(LibSnoo.Models.DataContext.Token);
             ApiCalls = new ApiCalls();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            selectedSubreddit = e.Parameter as MainDataViewModel ?? new MainDataViewModel { DisplayName = "all", Url = "/r/all", IconImg = "ms-appx:///Assets/RedditLogo.png", Description = "" };
+            selectedSubreddit = e.Parameter as Subreddit;
+            
+            posts = new IncrementalLoadingCollection<SubredditPostSource, Post>(selectedSubreddit);
             if (selectedSubreddit.DisplayName == "all")
             {
                 subRedditPageGrid.Children.Remove(separator);
                 subRedditPageGrid.Children.Remove(sideBar);
             }
-            postList.Header = selectedSubreddit;
+
             posts.SubReddit = selectedSubreddit.DisplayName;
         }
 
@@ -53,7 +54,7 @@ namespace SnooViewer.Pages
             }
         }
 
-        private void PostList_ItemClick(object sender, ItemClickEventArgs e)
+        private void PostList_ItemClick(object _, ItemClickEventArgs e)
         {
             if(postColDef.Width.Value == 0)//Open
             {

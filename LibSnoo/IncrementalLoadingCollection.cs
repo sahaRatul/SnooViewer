@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RedditSharp;
+using RedditSharp.Things;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,16 +15,16 @@ namespace LibSnoo
     {
         private readonly T source;
         private uint ItemsPerPage { get; set; }
-        public string Token { get; set; }
+        public Subreddit Subreddit { get; set; }
         public string SubReddit { get; set; }
         public string CommentId { get; set; }
         private string GetByCriteria { get; set; }
         public bool HasMoreItems { get; private set; }
 
-        public IncrementalLoadingCollection(string token, string subReddit = "all", string commentId = "", string getByCriteria = "hot", uint itemsPerPage = 10)
+        public IncrementalLoadingCollection(Subreddit subreddit, string subReddit = "all", string commentId = "", string getByCriteria = "hot", uint itemsPerPage = 10)
         {
             source = new T();
-            Token = token;
+            Subreddit = subreddit;
             SubReddit = subReddit;
             CommentId = commentId;
             GetByCriteria = getByCriteria;
@@ -36,7 +38,7 @@ namespace LibSnoo
 
             return Task.Run(async () =>
             {
-                var result = await source.GetPagedItems(Token, SubReddit, CommentId, GetByCriteria, count);
+                var result = await source.GetPagedItems(Subreddit, SubReddit, CommentId, GetByCriteria, count);
                 if (result == null || result.Count() == 0)
                 {
                     HasMoreItems = false;

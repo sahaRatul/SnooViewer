@@ -200,6 +200,10 @@
       <Project>{59c99bb0-8ab1-447b-b43f-06c14510c1f6}</Project>
       <Name>LibSnoo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RedditSharp\RedditSharp.csproj">
+      <Project>{5654FDBE-074C-47D9-BCE8-6AF9CB35E084}</Project>
+      <Name>RedditSharp</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

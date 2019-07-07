@@ -20,7 +20,7 @@ namespace RedditSharp
         /// <param name="agent"></param>
         public RedditObject(IWebAgent agent)
         {
-            WebAgent = agent ?? throw new ArgumentNullException(nameof(agent));
+            WebAgent = agent ?? new WebAgent();
         }
 
     }

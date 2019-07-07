@@ -4,11 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:data="using:LibSnoo.Models"
     xmlns:utils="using:LibSnoo.Utils"
     xmlns:sys="using:System"
     xmlns:UWPToolKit="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    mc:Ignorable="d"
+      xmlns:data="using:RedditSharp.Things"
+      mc:Ignorable="d"
     Background="{ThemeResource SystemControlChromeLowAcrylicWindowBrush}">
 
     <Grid x:Name="subRedditPageGrid">
@@ -20,8 +20,15 @@
             <ColumnDefinition x:Name="sidebarColDef" Width="0" MaxWidth="350"/>
         </Grid.ColumnDefinitions>
 
+        <!--List Header-->
+        <!--StackPanel Grid.ColumnSpan="5" Orientation="Vertical">
+            <Grid Padding="5" Margin="0 10 0 10">
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="Test Text" x:Name="headerText" FontWeight="Thin" TextAlignment="Left" Margin="15 0 15 0" TextWrapping="NoWrap" FontSize="40" Tapped="HeaderText_Tapped"/>
+            </Grid>
+        </-->
+
         <!---Post List-->
-        <ListView Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="postList" ItemsSource="{x:Bind posts}" SelectionMode="Single" IsItemClickEnabled="True" ItemClick="PostList_ItemClick">
+        <ListView Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="postList" Header="" ItemsSource="{x:Bind posts}" SelectionMode="Single" IsItemClickEnabled="True" ItemClick="PostList_ItemClick">
             <!--List Styles-->
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
@@ -29,27 +36,18 @@
                 </Style>
             </ListView.ItemContainerStyle>
 
-            <!--List Header-->
-            <ListView.HeaderTemplate>
-                <DataTemplate x:DataType="data:MainDataViewModel">
-                    <Grid Padding="5" Margin="0 10 0 10">
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind Url}" x:Name="headerText" FontWeight="Thin" TextAlignment="Left" Margin="15 0 15 0" TextWrapping="NoWrap" FontSize="40" Tapped="HeaderText_Tapped"/>
-                    </Grid>
-                </DataTemplate>
-            </ListView.HeaderTemplate>
-
             <!--List Items-->
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="data:MainDataViewModel" >
+                <DataTemplate x:DataType="data:Post" >
                     <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="2" BorderBrush="Black">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="{x:Bind utils:Utils.GetColWidth(70, Thumbnail)}" />
+                            <ColumnDefinition Width="{x:Bind utils:Utils.GetColWidth(70, Thumbnail.OriginalString)}" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <Image Visibility="{x:Bind utils:Utils.IsImageVisible(Thumbnail)}" HorizontalAlignment="Right" Source="{x:Bind Thumbnail}" Width="70" Height="70" Grid.Column="0" Grid.Row="0" />
+                        <Image Visibility="{x:Bind utils:Utils.IsImageVisible(Thumbnail.OriginalString)}" HorizontalAlignment="Right" Source="{x:Bind Thumbnail.OriginalString}" Width="70" Height="70" Grid.Column="0" Grid.Row="0" />
                         <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Padding="10 0 10 10">
                             <TextBlock TextWrapping="WrapWholeWords" HorizontalAlignment="Left" Text="{x:Bind Title}" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" FontSize="17"/>
                             <TextBlock TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Text="{x:Bind Url}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" FontSize="14"/>
@@ -72,7 +70,7 @@
                 </Grid>
             </UWPToolKit:GridSplitter.Element>
         </UWPToolKit:GridSplitter>
-        
+
         <!--Post details-->
         <ScrollViewer Grid.Column="2">
             <StackPanel Orientation="Vertical">
@@ -92,7 +90,7 @@
         <!---Subreddit details-->
         <ScrollViewer Grid.Column="4" Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}" x:Name="sideBar">
             <StackPanel Orientation="Vertical" Padding="0">
-                <Image HorizontalAlignment="Stretch" VerticalAlignment="Top" Source="{x:Bind selectedSubreddit.IconImg}" Height="100" Width="100" Margin="0 20 0 0"/>
+                <Image HorizontalAlignment="Stretch" VerticalAlignment="Top" Source="{x:Bind selectedSubreddit.IconImage}" Height="100" Width="100" Margin="0 20 0 0"/>
                 <UWPToolKit:MarkdownTextBlock Margin="10" Background="{ThemeResource SystemControlTransparentBrush}" Text="{x:Bind selectedSubreddit.Description}" />
             </StackPanel>
         </ScrollViewer>

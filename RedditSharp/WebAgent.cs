@@ -14,7 +14,7 @@ namespace RedditSharp
     {
 
         private const string OAuthDomainUrl = "oauth.reddit.com";
-        private static HttpClient _httpClient;
+        private static readonly HttpClient _httpClient;
 
         /// <summary>
         /// Additional values to append to the default RedditSharp user agent.
@@ -231,8 +231,7 @@ namespace RedditSharp
             var content = new List<KeyValuePair<string, string>>();
             foreach (var property in properties)
             {
-                var attr = property.GetCustomAttributes(typeof(RedditAPINameAttribute), false).FirstOrDefault() as RedditAPINameAttribute;
-                string name = attr == null ? property.Name : attr.Name;
+                string name = !(property.GetCustomAttributes(typeof(RedditAPINameAttribute), false).FirstOrDefault() is RedditAPINameAttribute attr) ? property.Name : attr.Name;
                 var entry = Convert.ToString(property.GetValue(data, null));
                 content.Add(new KeyValuePair<string,string>(name, entry));
             }
@@ -249,7 +248,5 @@ namespace RedditSharp
         public Task<HttpResponseMessage> GetResponseAsync(HttpRequestMessage message) {
           return _httpClient.SendAsync(message);
         }
-
-
     }
 }

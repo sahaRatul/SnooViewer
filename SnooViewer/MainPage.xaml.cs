@@ -1,6 +1,7 @@
 ﻿using LibSnoo;
 using LibSnoo.Constants;
 using LibSnoo.Models;
+using RedditSharp;
 using System;
 using System.Linq;
 using System.Web;
@@ -48,6 +49,8 @@ namespace SnooViewer
             var result = await login.Login_Refresh((string)localSettings.Values["refresh_token"]);
             LibSnoo.Models.DataContext.Token = result.AccessToken;
             LibSnoo.Models.DataContext.RefreshToken = result.RefreshToken;
+            LibSnoo.Models.DataContext.Reddit = new Reddit(result.AccessToken);
+            await LibSnoo.Models.DataContext.Reddit.InitOrUpdateUserAsync();
         }
 
         private async void LoginView_NavigationStarting(WebView _, WebViewNavigationStartingEventArgs args)
@@ -57,6 +60,8 @@ namespace SnooViewer
                 var result = await login.Login_Stage2(args.Uri);
                 LibSnoo.Models.DataContext.Token = result.AccessToken;
                 LibSnoo.Models.DataContext.RefreshToken = result.RefreshToken;
+                LibSnoo.Models.DataContext.Reddit = new Reddit(result.AccessToken);
+                await LibSnoo.Models.DataContext.Reddit.InitOrUpdateUserAsync();
                 args.Cancel = true;
                 localSettings.Values["refresh_token"] = LibSnoo.Models.DataContext.RefreshToken;
                 navBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
@@ -64,7 +69,7 @@ namespace SnooViewer
             }
         }
 
-        private void NavBar_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        private void NavBar_ItemInvoked(NavigationView _, NavigationViewItemInvokedEventArgs args)
         {
             FrameNavigationOptions navOptions = new FrameNavigationOptions
             {

@@ -124,6 +124,12 @@ namespace RedditSharp.Things
         public string HeaderImage { get; private set; }
 
         /// <summary>
+        /// Icon Img
+        /// </summary>
+        [JsonProperty("icon_img")]
+        public string IconImage { get; set; }
+
+        /// <summary>
         /// Header title.
         /// </summary>
         [JsonProperty("header_title")]
@@ -181,9 +187,9 @@ namespace RedditSharp.Things
         /// <summary>
         /// Property giving the moderator permissions of the logged in user on this subreddit.
         /// </summary>
-        [JsonProperty("mod_permissions")]
-        [JsonConverter(typeof(ModeratorPermissionConverter))]
-        public ModeratorPermission ModPermissions { get; private set; }
+        //[JsonProperty("mod_permissions")]
+        //[JsonConverter(typeof(ModeratorPermissionConverter))]
+        //public ModeratorPermission ModPermissions { get; private set; }
 
         /// <summary>
         /// Property determining whether the current logged in user is banned from the subreddit.
@@ -955,8 +961,6 @@ namespace RedditSharp.Things
             }
             return result;
         }
-
         #endregion
-
     }
 }

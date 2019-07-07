@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
+using RedditSharp.Things;
 
 namespace SnooViewer.Pages
 {
@@ -14,9 +15,8 @@ namespace SnooViewer.Pages
     /// </summary>
     public sealed partial class SubredditGridPage : Page
     {
-        private ObservableCollection<MainDataViewModel> SubReddits { get; } = new ObservableCollection<MainDataViewModel>();
+        private ObservableCollection<Subreddit> SubReddits { get; } = new ObservableCollection<Subreddit>();
         private readonly Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-        private readonly Landing landing = new Landing();
 
         public SubredditGridPage()
         {
@@ -42,20 +42,31 @@ namespace SnooViewer.Pages
             //Read the file
             string text = await Windows.Storage.FileIO.ReadTextAsync(subredditFile);
 
-            List<MainDataViewModel> retrievedSubReddits;
+            List<Subreddit> retrievedSubReddits = new List<Subreddit>();
             if (text == null || text == string.Empty)
             {
-                retrievedSubReddits = (await landing.GetSubscribedSubreddits(LibSnoo.Models.DataContext.Token)).OrderBy(x => x.Url).ToList();
-                await Windows.Storage.FileIO.WriteTextAsync(subredditFile, JsonConvert.SerializeObject(retrievedSubReddits));
+                //Load subreddits
+                if(LibSnoo.Models.DataContext.Reddit.User == null)
+                {
+                    await LibSnoo.Models.DataContext.Reddit.InitOrUpdateUserAsync();
+                }
+
+                RedditSharp.Listing<Subreddit> subListing = LibSnoo.Models.DataContext.Reddit.User.GetSubscribedSubreddits();
+                subListing.ForEach(subreddit =>
+                {
+                    subreddit.IconImage = subreddit.IconImage != string.Empty ? subreddit.IconImage : (subreddit.HeaderImage ?? "ms-appx:///Assets/RedditLogo.png");
+                    retrievedSubReddits.Add(subreddit);
+                });
+
+                //await Windows.Storage.FileIO.WriteTextAsync(subredditFile, JsonConvert.SerializeObject(retrievedSubReddits));
             }
             else
             {
-                retrievedSubReddits = JsonConvert.DeserializeObject<List<MainDataViewModel>>(text).OrderBy(x => x.Url).ToList();
+                JsonConvert.DeserializeObject<List<Subreddit>>(text).ForEach((x) => retrievedSubReddits.Add(x));
             }
 
-            foreach (var subreddit in retrievedSubReddits)
+            foreach(var subreddit in retrievedSubReddits)
             {
-                subreddit.IconImg = subreddit.IconImg != string.Empty ? subreddit.IconImg : (subreddit.HeaderImg ?? "ms-appx:///Assets/RedditLogo.png");
                 SubReddits.Add(subreddit);
             }
 

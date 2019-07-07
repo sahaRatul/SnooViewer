@@ -19,10 +19,8 @@ namespace RedditSharp
 
         private const string MeUrl = "/api/me.json";
         private const string OAuthMeUrl = "/api/v1/me.json";
-        private const string SubredditAboutUrl = "/r/{0}/about.json";
         private const string ComposeMessageUrl = "/api/compose";
         private const string RegisterAccountUrl = "/api/register";
-        private const string GetThingUrl = "/api/info.json?id={0}";
         private const string GetCommentUrl = "/r/{0}/comments/{1}/foo/{2}";
         private const string GetPostUrl = "{0}.json";
         private const string OAuthDomainUrl = "oauth.reddit.com";
@@ -223,10 +221,10 @@ namespace RedditSharp
             var json = await WebAgent.Post(CreateLiveEventUrl, new
             {
                 api_type = "json",
-                title = title,
-                description = description,
-                resources = resources,
-                nsfw = nsfw
+                title,
+                description,
+                resources,
+                nsfw
             }).ConfigureAwait(false);
 
             if (json["errors"].Any())
@@ -317,8 +315,8 @@ namespace RedditSharp
             var json = await WebAgent.Post(RegisterAccountUrl, new
             {
                 api_type = "json",
-                email = email,
-                passwd = passwd,
+                email,
+                passwd,
                 passwd2 = passwd,
                 user = userName
             }).ConfigureAwait(false);

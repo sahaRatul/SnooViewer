@@ -158,6 +158,12 @@
       <Version>12.0.2</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RedditSharp\RedditSharp.csproj">
+      <Project>{5654fdbe-074c-47d9-bce8-6af9cb35e084}</Project>
+      <Name>RedditSharp</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
