@@ -28,7 +28,7 @@ namespace SnooViewer.Pages
             selectedSubreddit = e.Parameter as Subreddit;
             
             posts = new IncrementalLoadingCollection<SubredditPostSource, Post>(selectedSubreddit);
-            if (selectedSubreddit.DisplayName == "all")
+            if (selectedSubreddit.DisplayName == "Front Page")
             {
                 subRedditPageGrid.Children.Remove(separator);
                 subRedditPageGrid.Children.Remove(sideBar);
@@ -39,7 +39,7 @@ namespace SnooViewer.Pages
 
         private void HeaderText_Tapped(object _, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            if (selectedSubreddit.DisplayName != "all")
+            if (selectedSubreddit.DisplayName != "Front Page")
             {
                 if (sidebarColDef.Width.Value == 0)
                 {

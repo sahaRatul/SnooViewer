@@ -1,5 +1,6 @@
 ﻿using LibSnoo;
 using LibSnoo.Models;
+using RedditSharp.Things;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace SnooViewer.Pages
     {
         private readonly ObservableCollection<MainDataViewModel> commentTree = null;
         private readonly ApiCalls apiCalls = null;
-        private MainDataViewModel selectedPost = null;
+        private Post selectedPost = null;
         Thickness x = new Thickness(20, 0, 0, 0);
 
         public PostPage()
@@ -32,7 +33,7 @@ namespace SnooViewer.Pages
         {
             base.OnNavigatedTo(e);
 
-            selectedPost = e.Parameter as MainDataViewModel;
+            selectedPost = e.Parameter as Post;
             var commentList = await apiCalls.GetCommentsForPost(selectedPost.Id, LibSnoo.Models.DataContext.Token);
 
             foreach(MainDataViewModel comment in commentList.GetRange(1, commentList.Count - 1))

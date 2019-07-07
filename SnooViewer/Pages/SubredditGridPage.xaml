@@ -10,33 +10,32 @@
 
     <SplitView x:Name="splitView" PaneBackground="{ThemeResource SystemControlAccentDark2AcrylicWindowAccentDark2MediumHighBrush}" IsPaneOpen="False" OpenPaneLength="250" CompactPaneLength="65" DisplayMode="CompactInline">
         <SplitView.Pane>
-            <ScrollViewer>
-                <StackPanel Orientation="Vertical">
-                    <Button Background="{ThemeResource SystemControlTransparentBrush}" Width="65" Height="50" x:Name="openCloseButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" FontSize="20" Click="OpenCloseButton_Click" />
-                    <ListView SelectionMode="Single" IsItemClickEnabled="True" x:Name="subredditList" ItemsSource="{x:Bind SubReddits}" ItemClick="SubredditList_ItemClick">
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <ItemsStackPanel AreStickyGroupHeadersEnabled="True"/>
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="data:Subreddit" >
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="50" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                    </Grid.RowDefinitions>
-                                    <Image Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Source="{x:Bind IconImage}" Height="40" Width="40" Margin="0 5 0 5"/>
-                                    <TextBlock Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" TextWrapping="WrapWholeWords" Text="{x:Bind DisplayName}" FontSize="20" Margin="5 0 0 0"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </StackPanel>
-            </ScrollViewer>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button VerticalAlignment="Top" Grid.Column="0" Background="{ThemeResource SystemControlTransparentBrush}" Width="65" Height="65" x:Name="openCloseButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" FontSize="20" Click="OpenCloseButton_Click" />
+                <ScrollViewer Grid.Column="0" Margin="0 65 0 0">
+                    <StackPanel Orientation="Vertical">
+                        <ListView SelectionMode="Single" IsItemClickEnabled="True" x:Name="subredditList" ItemsSource="{x:Bind SubReddits}" ItemClick="SubredditList_ItemClick">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="data:Subreddit" >
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                        </Grid.RowDefinitions>
+                                        <Image Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Source="{x:Bind IconImage}" Height="40" Width="40" Margin="0 5 0 5"/>
+                                        <TextBlock Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" TextWrapping="WrapWholeWords" Text="{x:Bind DisplayName}" FontSize="20" Margin="5 0 0 0"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
         </SplitView.Pane>
         <Grid>
             <Frame x:Name="contentFrame"/>

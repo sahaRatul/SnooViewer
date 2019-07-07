@@ -1,5 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace LibSnoo.Utils
 {
@@ -22,6 +24,18 @@ namespace LibSnoo.Utils
                 return new GridLength(0);
             }
             return new GridLength(originalWidth);
+        }
+
+        public static ImageSource CheckImageIsNullOrEmpty(string imgUrl)
+        {
+            if (imgUrl == null || imgUrl == "")
+            {
+                return new BitmapImage(new Uri("ms-appx:///Assets/RedditLogo.png"));
+            }
+            else
+            {
+                return new BitmapImage(new Uri(imgUrl));
+            }
         }
     }
 }

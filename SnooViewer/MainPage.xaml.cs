@@ -89,7 +89,7 @@ namespace SnooViewer
             else if ((string)args.InvokedItem == "Front Page")
             {
                 pageType = typeof(Pages.SubredditPage);
-                contentFrame.NavigateToType(pageType, new MainDataViewModel { DisplayName = "all", Url = "/r/all", IconImg = "ms-appx:///Assets/RedditLogo.png", Description = "" }, navOptions);
+                contentFrame.NavigateToType(pageType, LibSnoo.Models.DataContext.Reddit.FrontPage, navOptions);
             }
             else if ((string)args.InvokedItem == "Profile")
             {
