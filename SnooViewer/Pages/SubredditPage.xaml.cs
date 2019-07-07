@@ -14,6 +14,7 @@ namespace SnooViewer.Pages
         readonly IncrementalLoadingCollection<SubredditPostSource, MainDataViewModel> posts = null;
         public MainDataViewModel selectedSubreddit = null;
         public ApiCalls ApiCalls;
+        private object selectedItem = null;
 
         public SubredditPage()
         {
@@ -54,17 +55,20 @@ namespace SnooViewer.Pages
 
         private void PostList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if(postColDef.Width.Value == 0)
+            if(postColDef.Width.Value == 0)//Open
             {
                 anotherResizerColDef.Width = new GridLength(20);
-                postColDef.Width = new GridLength(250, GridUnitType.Star);
+                resizerColDef.Width = new GridLength(0);
+                sidebarColDef.Width = new GridLength(0);
+                postColDef.Width = new GridLength(100, GridUnitType.Star);
+                selectedItem = e.ClickedItem;
+                postFrame.Navigate(typeof(PostPage), e.ClickedItem);
             }
-            else
+            else//Close
             {
                 anotherResizerColDef.Width = new GridLength(0);
-                postColDef.Width = new GridLength(0);
+                postColDef.Width = new GridLength(0, GridUnitType.Star);
             }
-            postFrame.Navigate(typeof(PostPage), e.ClickedItem);
         }
     }
 }

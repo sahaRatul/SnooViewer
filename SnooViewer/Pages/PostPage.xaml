@@ -7,34 +7,32 @@
     xmlns:models="using:LibSnoo.Models"
     xmlns:UWPToolKit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}">
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        
+
         <!---Comment List-->
         <ListView Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="comments" ItemsSource="{x:Bind commentTree}" SelectionMode="Single" IsItemClickEnabled="True">
-            <!--List Styles-->
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 </Style>
             </ListView.ItemContainerStyle>
 
-            <!--List Items-->
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:MainDataViewModel" >
-                    <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="2" BorderBrush="Black">
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <StackPanel Grid.Column="0" Background="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush}" Grid.Row="0" VerticalAlignment="Center" Padding="10 10 10 10">
-                            <UWPToolKit:MarkdownTextBlock Grid.Column="0" TextWrapping="WrapWholeWords" Background="{ThemeResource SystemControlTransparentBrush}" Text="{x:Bind Body}" />
+                        <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">
+                            <UWPToolKit:MarkdownTextBlock Margin="{x:Bind Padding}" Background="{ThemeResource SystemControlTransparentBrush}" TextWrapping="WrapWholeWords" Text="{x:Bind Body}" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

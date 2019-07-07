@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using Windows.UI.Xaml;
 
 namespace LibSnoo.Models
 {
@@ -566,5 +567,6 @@ namespace LibSnoo.Models
         //FUCK Reddit's json format
         public List<MainDataViewModel> RepliesShallow { get; set; }
         public int? CommentDepth { get; set; }
+        public Thickness Padding { get; set; }
     }
 }

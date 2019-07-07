@@ -28,8 +28,7 @@ namespace LibSnoo
 
             retList.AddRange(result[0].Data.Children.Select(x => x.Data).ToList());
             var tempList = Shallower(result[1].Data.Children.Select(x => x.Data).ToList(), 0);
-
-            foreach(var item in tempList)
+            foreach (var item in tempList)
             {
                 retList.AddRange(DepthFirstTraversal(item));
             }

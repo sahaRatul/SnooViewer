@@ -3,6 +3,7 @@ using LibSnoo.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -18,6 +19,7 @@ namespace SnooViewer.Pages
         private readonly ObservableCollection<MainDataViewModel> commentTree = null;
         private readonly ApiCalls apiCalls = null;
         private MainDataViewModel selectedPost = null;
+        Thickness x = new Thickness(20, 0, 0, 0);
 
         public PostPage()
         {
@@ -35,6 +37,7 @@ namespace SnooViewer.Pages
 
             foreach(MainDataViewModel comment in commentList.GetRange(1, commentList.Count - 1))
             {
+                comment.Padding = new Thickness(10 + (comment.Depth.GetValueOrDefault() * 20), 0, 5, 0);
                 commentTree.Add(comment);
             }
         }

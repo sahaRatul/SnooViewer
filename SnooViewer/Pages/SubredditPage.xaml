@@ -74,9 +74,11 @@
         </UWPToolKit:GridSplitter>
         
         <!--Post details-->
-        <StackPanel Grid.Column="2" Orientation="Horizontal">
-            <Frame x:Name="postFrame"/>
-        </StackPanel>
+        <ScrollViewer Grid.Column="2">
+            <StackPanel Orientation="Vertical">
+                <Frame x:Name="postFrame"/>
+            </StackPanel>
+        </ScrollViewer>
 
         <!---Separator-->
         <UWPToolKit:GridSplitter Grid.Column="3" x:Name="separator" ResizeBehavior="BasedOnAlignment" ResizeDirection="Auto" Background="Gray" Foreground="White" FontSize="13">
