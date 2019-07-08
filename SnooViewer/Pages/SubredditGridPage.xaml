@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
 
-    <SplitView x:Name="splitView" PaneBackground="{ThemeResource SystemControlAccentDark2AcrylicWindowAccentDark2MediumHighBrush}" IsPaneOpen="False" OpenPaneLength="250" CompactPaneLength="65" DisplayMode="CompactInline">
+    <SplitView x:Name="splitView" PaneBackground="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush}" IsPaneOpen="False" OpenPaneLength="200" CompactPaneLength="65" DisplayMode="CompactInline">
         <SplitView.Pane>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -28,7 +28,7 @@
                                         <Grid.RowDefinitions>
                                         </Grid.RowDefinitions>
                                         <Image Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Source="{x:Bind IconImage}" Height="40" Width="40" Margin="0 5 0 5"/>
-                                        <TextBlock Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" TextWrapping="WrapWholeWords" Text="{x:Bind DisplayName}" FontSize="20" Margin="5 0 0 0"/>
+                                        <TextBlock Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" TextWrapping="WrapWholeWords" Text="{x:Bind DisplayName}" FontSize="15" Margin="5 0 0 0"/>
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
@@ -39,7 +39,7 @@
         </SplitView.Pane>
         <Grid>
             <Frame x:Name="contentFrame"/>
-            <ProgressRing x:Name="loadingRing" Height="133" Width="133"/>
+            <ProgressRing x:Name="loadingRing" Height="100" Width="100"/>
         </Grid>
     </SplitView>
 </Page>

@@ -54,7 +54,6 @@ namespace RedditSharp.Things
         public String this[String property] => RawJson[property].ValueOrDefault<string>();
         #endregion
 
-
         /// <summary>
         /// Create new Thing from given JSON data.
         /// </summary>

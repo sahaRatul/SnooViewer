@@ -128,7 +128,7 @@
     <Compile Include="Captcha.cs" />
     <Compile Include="CaptchaFailedException.cs" />
     <Compile Include="CaptchaResponse.cs" />
-    <Compile Include="Comment.cs" />
+    <Compile Include="Things\Comment.cs" />
     <Compile Include="CommentsEnumerable.cs" />
     <Compile Include="ConsoleCaptchaSolver.cs" />
     <Compile Include="Contributor.cs" />
@@ -158,7 +158,7 @@
     <Compile Include="Things\ModeratableThing.cs" />
     <Compile Include="ModeratorPermission.cs" />
     <Compile Include="ModeratorUser.cs" />
-    <Compile Include="More.cs" />
+    <Compile Include="Things\More.cs" />
     <Compile Include="Multi.cs" />
     <Compile Include="MultiData.cs" />
     <Compile Include="MultipartFormBuilder.cs" />

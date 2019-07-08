@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace SnooViewer.Pages
 {
@@ -19,7 +18,7 @@ namespace SnooViewer.Pages
 
         public PostPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             commentTree = new ObservableCollection<Thing>();
         }
 
@@ -31,9 +30,8 @@ namespace SnooViewer.Pages
             List<Thing> commentsWithMores = await selectedPost.GetCommentsWithMoresAsync(100);
             foreach (var comment in commentsWithMores)
             {
-                if (comment is Comment) //Assign Depth & Flatten tree
+                if (comment is Comment) //Flatten tree for list
                 {
-                    AssignCommentDepth((comment as Comment).Comments);
                     Stack<Thing> flatTree = new Stack<Thing>();
                     DepthFirstTraversal(comment as Comment, flatTree);
                     flatTree.Reverse().ToList().ForEach((x) => commentTree.Add(x));
@@ -45,38 +43,64 @@ namespace SnooViewer.Pages
             }
         }
 
-        public void AssignCommentDepth(IList<Thing> commentTree, uint depth = 1)
-        {
-            foreach (var thing in commentTree)
-            {
-                if(thing is Comment)
-                {
-                    (thing as Comment).Depth = depth;
-                    if ((thing as Comment).Comments.Count > 0)
-                    {
-                        AssignCommentDepth((thing as Comment).Comments, depth + 1);
-                    }
-                }
-                else if(thing is More)
-                {
-                    (thing as More).Depth = depth;
-                }
-            }
-        }
-
         public void DepthFirstTraversal(Comment root, Stack<Thing> stack)
         {
             stack.Push(root);
-            foreach(Thing thing in root.Comments)
+            foreach (Thing thing in root.Comments)
             {
                 if (thing is Comment)
                 {
                     DepthFirstTraversal(thing as Comment, stack);
                 }
-                else if(thing is More)
+                else if (thing is More)
                 {
                     stack.Push(thing);
                 }
+            }
+        }
+
+        public static string GetLoadMoreCommentsString(string[] children)
+        {
+            return "Load " + children.Length + " more comments";
+        }
+
+        private async void Comments_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (e.ClickedItem is More)
+            {
+                var clickedItem = e.ClickedItem as More;
+                var Id = clickedItem.Id;
+                var index = commentTree.IndexOf(clickedItem);
+
+                //Load all child comments
+                var comments = await Task.Run(() => clickedItem.GetThingsAsync());
+                List<Thing> tempList = new List<Thing>();
+
+                foreach (var comment in comments)
+                {
+                    if (comment is Comment) //Flatten tree for listview
+                    {
+                        Stack<Thing> flatTree = new Stack<Thing>();
+                        DepthFirstTraversal(comment as Comment, flatTree);
+                        flatTree.Reverse().ToList().ForEach((x) => tempList.Add(x));
+                    }
+                    else if (comment is More)
+                    {
+                        (comment as More).Depth = clickedItem.Depth;
+                        tempList.Add(comment);
+                    }
+                }
+
+                //Replace more item at index
+                commentTree[index] = tempList[0];
+                tempList.RemoveAt(0); index++;
+
+                //Insert each item of templist at specific index
+                tempList.ForEach((x) =>
+                {
+                    commentTree.Insert(index, x);
+                    index++;
+                });
             }
         }
     }

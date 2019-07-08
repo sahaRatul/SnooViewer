@@ -4,13 +4,13 @@ using Windows.UI.Xaml.Data;
 
 namespace SnooViewer.Converters
 {
-    public class DepthToPaddingConverter : IValueConverter
+    public class DepthToThicknessConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string _)
         {
             if (value is UInt32)
             {
-                return new Thickness(10 + (uint)value * 20, 0, 0, 0);
+                return new Thickness((uint)value * 15, 0, 0, 0);
             }
             else
             {

@@ -28,48 +28,47 @@ namespace SnooViewer.Pages
             selectedSubreddit = e.Parameter as Subreddit;
             
             posts = new IncrementalLoadingCollection<SubredditPostSource, Post>(selectedSubreddit);
-            if (selectedSubreddit.DisplayName == "Front Page")
-            {
-                subRedditPageGrid.Children.Remove(separator);
-                subRedditPageGrid.Children.Remove(sideBar);
-            }
 
             posts.SubReddit = selectedSubreddit.DisplayName;
         }
 
         private void HeaderText_Tapped(object _, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            if (selectedSubreddit.DisplayName != "Front Page")
-            {
-                if (sidebarColDef.Width.Value == 0)
-                {
-                    resizerColDef.Width = new GridLength(11);
-                    sidebarColDef.Width = new GridLength(250);
-                }
-                else
-                {
-                    resizerColDef.Width = new GridLength(0);
-                    sidebarColDef.Width = new GridLength(0);
-                }
-            }
+
         }
 
         private void PostList_ItemClick(object _, ItemClickEventArgs e)
         {
-            if(postColDef.Width.Value == 0)//Open
+            if(postColDef.Width.Value == 0 && selectedItem != e.ClickedItem)//Open
             {
                 anotherResizerColDef.Width = new GridLength(20);
-                resizerColDef.Width = new GridLength(0);
-                sidebarColDef.Width = new GridLength(0);
-                postColDef.Width = new GridLength(100, GridUnitType.Star);
+                postColDef.Width = new GridLength(((this.ActualWidth / 2) + 20), GridUnitType.Pixel);
                 selectedItem = e.ClickedItem;
                 postFrame.Navigate(typeof(PostPage), e.ClickedItem);
             }
-            else//Close
+            else if(postColDef.Width.Value != 0 && selectedItem != e.ClickedItem)
+            {
+                selectedItem = e.ClickedItem;
+                postFrame.Navigate(typeof(PostPage), e.ClickedItem);
+            }
+            else
             {
                 anotherResizerColDef.Width = new GridLength(0);
                 postColDef.Width = new GridLength(0, GridUnitType.Star);
+                selectedItem = null;
             }
+        }
+
+        private void GridSeparator_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            postList.Visibility = Visibility.Collapsed;
+            postFrame.Visibility = Visibility.Collapsed;
+        }
+
+        private void GridSeparator_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            postList.Visibility = Visibility.Visible;
+            postFrame.Visibility = Visibility.Visible;
         }
     }
 }

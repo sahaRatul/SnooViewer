@@ -250,7 +250,7 @@ namespace RedditSharp.Things
         public async Task SetFlairAsync(string flairText, string flairClass)
         {
             //TODO Unit test
-            await Post.SetFlairAsync(this.WebAgent, this.SubredditName, this.FullName, flairText, flairClass).ConfigureAwait(false);
+            await SetFlairAsync(this.WebAgent, this.SubredditName, this.FullName, flairText, flairClass).ConfigureAwait(false);
             LinkFlairText = flairText;
         }
 
@@ -332,10 +332,29 @@ namespace RedditSharp.Things
                     things.Add(new More(WebAgent, comment));
                 }
             }
-
+            ReplaceParentIdsOfMores(things);
             return things;
-
         }
+
+        /// <summary>
+        /// Fix all the parent Ids in More objects
+        /// </summary>
+        /// <param name="comments"></param>
+        private void ReplaceParentIdsOfMores(IList<Thing> comments)
+        {
+            foreach(Thing thing in comments)
+            {
+                if(thing is More)
+                {
+                    (thing as More).ParentId = "t3_" + Id;
+                }
+                else if(thing is Comment)
+                {
+                    ReplaceParentIdsOfMores((thing as Comment).Comments);
+                }
+            }
+        }
+
         /// <summary>
         /// Returns an <see cref="IAsyncEnumerable{T}"/> of <see cref="Comment"/> containing all comments in a post.
         /// This will cause multiple web requests on larger comment sections.

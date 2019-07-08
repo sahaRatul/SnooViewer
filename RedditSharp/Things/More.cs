@@ -31,12 +31,13 @@ namespace RedditSharp.Things
         /// Parent base36 id.
         /// </summary>
         [JsonProperty("parent_id")]
-        public string ParentId { get; private set; }
+        public string ParentId { get; internal set; }
 
         /// <summary>
-        /// Depth of the object when in tree
+        /// Depth Property
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty("depth")]
+        [System.ComponentModel.DefaultValue(0)]
         public uint Depth { get; set; }
 
         /// <inheritdoc />

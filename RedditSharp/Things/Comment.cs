@@ -175,7 +175,10 @@ namespace RedditSharp.Things
         [JsonIgnore]
         public Thing Parent { get; internal set; }
 
-        [JsonIgnore]
+        /// <summary>
+        /// Depth Property
+        /// </summary>
+        [JsonProperty("depth")]
         [System.ComponentModel.DefaultValue(0)]
         public uint Depth { get; set; }
 

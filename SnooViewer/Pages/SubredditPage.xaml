@@ -11,22 +11,20 @@
     mc:Ignorable="d"
     Background="{ThemeResource SystemControlChromeLowAcrylicWindowBrush}">
 
-    <Grid x:Name="subRedditPageGrid">
+    <Grid x:Name="subRedditPageGrid" UseLayoutRounding="True">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="postListColDef" MinWidth="500" Width="*"/>
+            <ColumnDefinition x:Name="postListColDef" MinWidth="200" Width="*"/>
             <ColumnDefinition x:Name="anotherResizerColDef" Width="0" />
             <ColumnDefinition x:Name="postColDef" Width="0"/>
-            <ColumnDefinition x:Name="resizerColDef" Width="0" />
-            <ColumnDefinition x:Name="sidebarColDef" Width="0" MaxWidth="350"/>
         </Grid.ColumnDefinitions>
 
         <!--List Header-->
-        <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Orientation="Horizontal">
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="5" Orientation="Horizontal">
             <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Text="{x:Bind selectedSubreddit.DisplayName}" x:Name="headerText" FontWeight="Thin" TextAlignment="Left" Margin="15 0 10 0" TextWrapping="NoWrap" FontSize="40" Tapped="HeaderText_Tapped"/>
         </StackPanel>
 
         <!---Post List-->
-        <ListView Grid.Column="0" Grid.Row="1" Margin="0 65 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="postList" ItemsSource="{x:Bind posts}" SelectionMode="Single" IsItemClickEnabled="True" ItemClick="PostList_ItemClick">
+        <ListView Grid.Column="0" Margin="0 65 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="postList" ItemsSource="{x:Bind posts}" SelectionMode="Single" IsItemClickEnabled="True" ItemClick="PostList_ItemClick">
             <!--List Styles-->
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
@@ -61,36 +59,27 @@
         </ListView>
 
         <!---Separator-->
-        <UWPToolKit:GridSplitter Grid.Column="1" Grid.Row="1" x:Name="anotherSeparator" ResizeBehavior="BasedOnAlignment" ResizeDirection="Auto" Background="Gray" Foreground="White" FontSize="13">
+        <UWPToolKit:GridSplitter Grid.Column="1" Width="10" x:Name="gridSeparator" ResizeBehavior="BasedOnAlignment" ResizeDirection="Auto" Background="Gray" Foreground="White" FontSize="10" PointerPressed="GridSeparator_PointerPressed" PointerReleased="GridSeparator_PointerReleased">
             <UWPToolKit:GridSplitter.Element>
                 <Grid>
-                    <TextBlock HorizontalAlignment="Center" IsHitTestVisible="False" Text="" Foreground="Black" FontFamily="Segoe MDL2 Assets" />
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False" Text="&#xE784;" Foreground="Black" FontFamily="Segoe MDL2 Assets" />
                 </Grid>
             </UWPToolKit:GridSplitter.Element>
         </UWPToolKit:GridSplitter>
 
         <!--Post details-->
-        <ScrollViewer Grid.Column="2" Grid.Row="1">
+        <ScrollViewer Grid.Column="2">
             <StackPanel Orientation="Vertical">
                 <Frame x:Name="postFrame"/>
             </StackPanel>
         </ScrollViewer>
 
-        <!---Separator-->
-        <UWPToolKit:GridSplitter Grid.Column="3" Grid.Row="1" x:Name="separator" ResizeBehavior="BasedOnAlignment" ResizeDirection="Auto" Background="Gray" Foreground="White" FontSize="13">
-            <UWPToolKit:GridSplitter.Element>
-                <Grid>
-                    <TextBlock HorizontalAlignment="Center" IsHitTestVisible="False" Text="" Foreground="Black" FontFamily="Segoe MDL2 Assets" />
-                </Grid>
-            </UWPToolKit:GridSplitter.Element>
-        </UWPToolKit:GridSplitter>
-
         <!---Subreddit details-->
-        <ScrollViewer Grid.Column="4" Grid.Row="1" Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}" x:Name="sideBar">
+        <!--ScrollViewer Grid.Column="4" Grid.Row="1" Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}" x:Name="sideBar">
             <StackPanel Orientation="Vertical" Padding="0">
                 <Image HorizontalAlignment="Stretch" VerticalAlignment="Top" Source="{x:Bind utils:Utils.CheckImageIsNullOrEmpty(selectedSubreddit.IconImage)}" Height="100" Width="100" Margin="0 20 0 0"/>
                 <UWPToolKit:MarkdownTextBlock Margin="10" Background="{ThemeResource SystemControlTransparentBrush}" Text="{x:Bind selectedSubreddit.Description}" />
             </StackPanel>
-        </ScrollViewer>
+        </-->
     </Grid>
 </Page>
