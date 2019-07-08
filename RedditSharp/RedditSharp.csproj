@@ -132,7 +132,7 @@
     <Compile Include="CommentsEnumerable.cs" />
     <Compile Include="ConsoleCaptchaSolver.cs" />
     <Compile Include="Contributor.cs" />
-    <Compile Include="CreatedThing.cs" />
+    <Compile Include="Things\CreatedThing.cs" />
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="DefaultSearchFormatter.cs" />
     <Compile Include="Domain.cs" />
@@ -155,7 +155,7 @@
     <Compile Include="MData.cs" />
     <Compile Include="ModAction.cs" />
     <Compile Include="ModActionType.cs" />
-    <Compile Include="ModeratableThing.cs" />
+    <Compile Include="Things\ModeratableThing.cs" />
     <Compile Include="ModeratorPermission.cs" />
     <Compile Include="ModeratorUser.cs" />
     <Compile Include="More.cs" />
@@ -186,13 +186,13 @@
     <Compile Include="SubredditStyle.cs" />
     <Compile Include="TBUserNote.cs" />
     <Compile Include="TextData.cs" />
-    <Compile Include="Thing.cs" />
+    <Compile Include="Things\Thing.cs" />
     <Compile Include="ToolBoxUserNotes.cs" />
     <Compile Include="ToolBoxUserNotesException.cs" />
     <Compile Include="UnixTimeStamp.cs" />
     <Compile Include="UnixTimestampConverter.cs" />
     <Compile Include="UrlParser.cs" />
-    <Compile Include="VotableThing.cs" />
+    <Compile Include="Things\VotableThing.cs" />
     <Compile Include="WebAgent.cs" />
     <Compile Include="WebAgentPool.cs" />
     <Compile Include="Wiki.cs" />

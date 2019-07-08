@@ -33,6 +33,12 @@ namespace RedditSharp.Things
         [JsonProperty("parent_id")]
         public string ParentId { get; private set; }
 
+        /// <summary>
+        /// Depth of the object when in tree
+        /// </summary>
+        [JsonIgnore]
+        public uint Depth { get; set; }
+
         /// <inheritdoc />
         internal override JToken GetJsonData(JToken json) => json["data"];
 
@@ -47,7 +53,7 @@ namespace RedditSharp.Things
             if (json["errors"].Count() != 0)
                 throw new AuthenticationException("Incorrect login.");
             var moreJson = json["data"]["things"];
-            return moreJson.Select(t => Thing.Parse(WebAgent, t)).ToList();
+            return moreJson.Select(t => Parse(WebAgent, t)).ToList();
         }
     }
 }

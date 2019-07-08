@@ -4,39 +4,55 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:LibSnoo.Models"
     xmlns:UWPToolKit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:models="using:RedditSharp.Things"
+    xmlns:converters="using:SnooViewer.Converters"
+    xmlns:templateselector="using:SnooViewer.TemplateSelector"
     mc:Ignorable="d"
     Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}">
 
+    <Page.Resources>
+        <!--Padding Converter-->
+        <converters:DepthToPaddingConverter x:Key="DepthToPaddingConverter" />
+        
+        <!--Data Template for Comment-->
+        <DataTemplate x:Key="CommentDataTemplate" x:DataType="models:Comment">
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <UWPToolKit:MarkdownTextBlock Padding="{x:Bind Depth, Converter={StaticResource DepthToPaddingConverter}}" Background="{ThemeResource SystemControlTransparentBrush}" TextWrapping="WrapWholeWords" Text="{x:Bind Body}" />
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+
+        <!--Data Template for More-->
+        <DataTemplate x:Key="MoreDataTemplate" x:DataType="models:More">
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="2">
+                <TextBlock Padding="{x:Bind Depth, Converter={StaticResource DepthToPaddingConverter}}" Text="Load more comments"/>
+            </Grid>
+        </DataTemplate>
+
+        <!--Template Selector for Grid-->
+        <templateselector:CommentsTemplateSelector x:Key="CommentsTemplateSelector" CommentDataTemplate="{StaticResource CommentDataTemplate}" MoreDataTemplate="{StaticResource MoreDataTemplate}"></templateselector:CommentsTemplateSelector>
+    </Page.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <!---Comment List-->
-        <ListView Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="comments" ItemsSource="{x:Bind commentTree}" SelectionMode="Single" IsItemClickEnabled="True">
+        <ListView Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="comments" ItemsSource="{x:Bind commentTree}" ItemTemplateSelector="{StaticResource CommentsTemplateSelector}" SelectionMode="Single" IsItemClickEnabled="True">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 </Style>
             </ListView.ItemContainerStyle>
-
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="models:MainDataViewModel" >
-                    <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">
-                            <UWPToolKit:MarkdownTextBlock Margin="{x:Bind Padding}" Background="{ThemeResource SystemControlTransparentBrush}" TextWrapping="WrapWholeWords" Text="{x:Bind Body}" />
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
         </ListView>
     </Grid>
 </Page>

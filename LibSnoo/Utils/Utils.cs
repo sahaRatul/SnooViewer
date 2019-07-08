@@ -37,5 +37,10 @@ namespace LibSnoo.Utils
                 return new BitmapImage(new Uri(imgUrl));
             }
         }
+
+        public static Thickness GenerateCommentLeftPadding(uint commentDepth, int top, int right, int bottom)
+        {
+            return new Thickness(10 + commentDepth * 20, top, right, bottom);
+        }
     }
 }

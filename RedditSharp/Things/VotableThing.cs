@@ -54,7 +54,7 @@ namespace RedditSharp.Things
         /// Number of upvotes on this item.
         /// </summary>
         [JsonProperty("downs")]
-        public int Downvotes { get; private set; }
+        public int? Downvotes { get; private set; }
 
         /// <summary>
         /// Returns true if this item has been edited by the author.
@@ -72,7 +72,7 @@ namespace RedditSharp.Things
         /// Number of upvotes on this item.
         /// </summary>
         [JsonProperty("ups")]
-        public int Upvotes { get; private set; }
+        public int? Upvotes { get; private set; }
 
         /// <summary>
         /// Returns true if this item is saved.
@@ -120,7 +120,7 @@ namespace RedditSharp.Things
         {
             get
             {
-                switch (this.Liked)
+                switch (Liked)
                 {
                     case true: return VoteType.Upvote;
                     case false: return VoteType.Downvote;
@@ -137,7 +137,7 @@ namespace RedditSharp.Things
         /// </summary>
         public Task UpvoteAsync()
         {
-            return this.SetVoteAsync(VoteType.Upvote);
+            return SetVoteAsync(VoteType.Upvote);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace RedditSharp.Things
         /// </summary>
         public Task DownvoteAsync()
         {
-            return this.SetVoteAsync(VoteType.Downvote);
+            return SetVoteAsync(VoteType.Downvote);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace RedditSharp.Things
         /// <param name="type"></param>
         public async Task SetVoteAsync(VoteType type)
         {
-            if (this.Vote == type) return;
+            if (Vote == type) return;
 
             var data = await WebAgent.Post(VoteUrl, new
             {

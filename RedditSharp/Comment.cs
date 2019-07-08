@@ -98,11 +98,21 @@ namespace RedditSharp.Things
         {
             // Parse sub comments
             var replies = data["data"]["replies"];
-            var subComments = new List<Comment>();
+            var subComments = new List<Thing>();
             if (replies != null && replies.Count() > 0)
             {
                 foreach (var comment in replies["data"]["children"])
-                    subComments.Add(new Comment(WebAgent, comment, sender));
+                {
+                    var newComment = new Comment(WebAgent, comment, sender);
+                    if (newComment.Kind != "more")
+                    {
+                        subComments.Add(newComment);
+                    }
+                    else
+                    {
+                        subComments.Add(new More(WebAgent, comment));
+                    }
+                }
             }
             Comments = subComments.ToArray();
         }
@@ -143,6 +153,7 @@ namespace RedditSharp.Things
         [JsonProperty("link_title")]
         public string LinkTitle { get; private set; }
 
+
         [JsonProperty("new")]
         public bool Unread { get; private set; }
 
@@ -156,13 +167,17 @@ namespace RedditSharp.Things
         /// Replies to this comment.
         /// </summary>
         [JsonIgnore]
-        public IList<Comment> Comments { get; private set; }
+        public IList<Thing> Comments { get; private set; }
 
         /// <summary>
         /// Parent <see cref="VotableThing"/>
         /// </summary>
         [JsonIgnore]
         public Thing Parent { get; internal set; }
+
+        [JsonIgnore]
+        [System.ComponentModel.DefaultValue(0)]
+        public uint Depth { get; set; }
 
 		/// <inheritdoc/>
 		public override string Shortlink => Permalink.ToString();
