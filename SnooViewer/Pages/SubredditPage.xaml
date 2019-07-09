@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:utils="using:LibSnoo.Utils"
+    xmlns:utils="using:SnooViewer.Utils"
     xmlns:sys="using:System"
     xmlns:UWPToolKit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:data="using:RedditSharp.Things"
@@ -20,11 +20,11 @@
 
         <!--List Header-->
         <StackPanel Grid.Column="0" Grid.ColumnSpan="5" Orientation="Horizontal">
-            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Text="{x:Bind selectedSubreddit.DisplayName}" x:Name="headerText" FontWeight="Thin" TextAlignment="Left" Margin="15 0 10 0" TextWrapping="NoWrap" FontSize="40" Tapped="HeaderText_Tapped"/>
+            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Text="{x:Bind selectedSubreddit.DisplayName}" x:Name="headerText" FontWeight="Thin" TextAlignment="Left" Margin="15 0 10 0" TextWrapping="NoWrap" FontSize="40"/>
         </StackPanel>
 
         <!---Post List-->
-        <ListView Grid.Column="0" Margin="0 65 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="postList" ItemsSource="{x:Bind posts}" SelectionMode="Single" IsItemClickEnabled="True" ItemClick="PostList_ItemClick">
+        <ListView Grid.Column="0" Margin="0 65 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="postList" ItemsSource="{x:Bind Posts}" SelectionMode="Single" IsItemClickEnabled="True" ItemClick="PostList_ItemClick">
             <!--List Styles-->
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">

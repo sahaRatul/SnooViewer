@@ -1,6 +1,6 @@
 ﻿using RedditSharp;
 
-namespace LibSnoo.Models
+namespace SnooViewer
 {
     public static class DataContext
     {

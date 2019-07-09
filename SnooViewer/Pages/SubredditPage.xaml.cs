@@ -1,4 +1,4 @@
-﻿using LibSnoo;
+﻿using SnooViewer.Helpers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -11,30 +11,25 @@ namespace SnooViewer.Pages
     /// </summary>
     public sealed partial class SubredditPage : Page
     {
-        private IncrementalLoadingCollection<SubredditPostSource, Post> posts = null;
         public Subreddit selectedSubreddit = null;
-        public ApiCalls ApiCalls;
         private object selectedItem = null;
+
+        public IncrementalLoadingCollection<SubredditPostSource, Post> Posts { get; set; } = null;
 
         public SubredditPage()
         {
             this.InitializeComponent();
-            ApiCalls = new ApiCalls();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             selectedSubreddit = e.Parameter as Subreddit;
-            
-            posts = new IncrementalLoadingCollection<SubredditPostSource, Post>(selectedSubreddit);
 
-            posts.SubReddit = selectedSubreddit.DisplayName;
-        }
-
-        private void HeaderText_Tapped(object _, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-
+            Posts = new IncrementalLoadingCollection<SubredditPostSource, Post>(selectedSubreddit)
+            {
+                SubReddit = selectedSubreddit.DisplayName
+            };
         }
 
         private void PostList_ItemClick(object _, ItemClickEventArgs e)

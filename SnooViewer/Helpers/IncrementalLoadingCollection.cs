@@ -1,5 +1,5 @@
-﻿using RedditSharp;
-using RedditSharp.Things;
+﻿using RedditSharp.Things;
+using SnooViewer.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,7 +9,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace LibSnoo
+namespace SnooViewer.Helpers
 {
     public class IncrementalLoadingCollection<T, I> : ObservableCollection<I>, ISupportIncrementalLoading where T : IIncrementalSource<I>, new()
     {

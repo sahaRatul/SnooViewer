@@ -118,10 +118,17 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Constants\Constants.cs" />
     <Compile Include="Converters\DepthToMarginConverter.cs" />
+    <Compile Include="DataContext.cs" />
+    <Compile Include="Helpers\IncrementalLoadingCollection.cs" />
+    <Compile Include="Helpers\LoginHelper.cs" />
+    <Compile Include="Helpers\SubredditPostSource.cs" />
+    <Compile Include="Interfaces\IIncrementalSource.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\AuthViewModel.cs" />
     <Compile Include="Pages\PostPage.xaml.cs">
       <DependentUpon>PostPage.xaml</DependentUpon>
     </Compile>
@@ -138,7 +145,8 @@
       <DependentUpon>UserPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TemplateSelector\CommentsTemplateSelector.cs" />
+    <Compile Include="TemplateSelectors\CommentsTemplateSelector.cs" />
+    <Compile Include="Utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

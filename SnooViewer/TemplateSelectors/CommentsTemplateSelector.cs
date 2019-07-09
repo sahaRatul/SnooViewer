@@ -2,7 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace SnooViewer.TemplateSelector
+namespace SnooViewer.TemplateSelectors
 {
     public class CommentsTemplateSelector : DataTemplateSelector
     {

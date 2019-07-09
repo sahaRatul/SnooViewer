@@ -1,6 +1,4 @@
-﻿using LibSnoo;
-using LibSnoo.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -46,12 +44,12 @@ namespace SnooViewer.Pages
             if (text == null || text == string.Empty)
             {
                 //Load subreddits
-                if(LibSnoo.Models.DataContext.Reddit.User == null)
+                if(SnooViewer.DataContext.Reddit.User == null)
                 {
-                    await LibSnoo.Models.DataContext.Reddit.InitOrUpdateUserAsync();
+                    await SnooViewer.DataContext.Reddit.InitOrUpdateUserAsync();
                 }
 
-                RedditSharp.Listing<Subreddit> subListing = LibSnoo.Models.DataContext.Reddit.User.GetSubscribedSubreddits();
+                RedditSharp.Listing<Subreddit> subListing = SnooViewer.DataContext.Reddit.User.GetSubscribedSubreddits();
                 subListing.ForEach(subreddit =>
                 {
                     subreddit.IconImage = subreddit.IconImage != string.Empty ? subreddit.IconImage : (subreddit.HeaderImage ?? "ms-appx:///Assets/RedditLogo.png");

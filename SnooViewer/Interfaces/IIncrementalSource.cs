@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace LibSnoo
+namespace SnooViewer.Interfaces
 {
     public interface IIncrementalSource<T>
     {

@@ -1,9 +1,10 @@
 ﻿using RedditSharp.Things;
+using SnooViewer.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LibSnoo
+namespace SnooViewer.Helpers
 {
     public class SubredditPostSource : IIncrementalSource<Post>
     {

@@ -1,12 +1,13 @@
-﻿using LibSnoo;
-using LibSnoo.Constants;
-using LibSnoo.Models;
+﻿//using LibSnoo;
+using SnooViewer.Constants;
+using SnooViewer.Models;
 using RedditSharp;
 using System;
 using System.Linq;
 using System.Web;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using SnooViewer.Helpers;
 
 namespace SnooViewer
 {
@@ -17,7 +18,7 @@ namespace SnooViewer
     {
         private readonly static string clientId = "84uK1BRyofwcVw";
         private readonly static string clientSecret = "V5oWEHWvoKXee9Dwi6W_q6ehoCw";
-        private readonly Login login = new Login(clientId, clientSecret);
+        private readonly LoginHelper loginHelper = new LoginHelper(clientId, clientSecret);
         private readonly Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
         public MainPage()
@@ -37,33 +38,33 @@ namespace SnooViewer
 
         private void GenerateToken()
         {
-            var scopes = Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
+            var scopes = Constants.Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
             var urlParams = "client_id=" + clientId + "&response_type=code&state=uyagsjgfhjs&duration=permanent&redirect_uri=" + HttpUtility.UrlEncode("http://127.0.0.1:3000/reddit_callback") + "&scope=" + HttpUtility.UrlEncode(scopes);
-            Uri targetUri = new Uri(Constants.redditApiBaseUrl + "authorize?" + urlParams);
+            Uri targetUri = new Uri(Constants.Constants.redditApiBaseUrl + "authorize?" + urlParams);
             loginView.Navigate(targetUri);
         }
 
         private async void RefreshToken()
         {
             //Refresh Token flow
-            var result = await login.Login_Refresh((string)localSettings.Values["refresh_token"]);
-            LibSnoo.Models.DataContext.Token = result.AccessToken;
-            LibSnoo.Models.DataContext.RefreshToken = result.RefreshToken;
-            LibSnoo.Models.DataContext.Reddit = new Reddit(result.AccessToken);
-            await LibSnoo.Models.DataContext.Reddit.InitOrUpdateUserAsync();
+            var result = await loginHelper.Login_Refresh((string)localSettings.Values["refresh_token"]);
+            SnooViewer.DataContext.Token = result.AccessToken;
+            SnooViewer.DataContext.RefreshToken = result.RefreshToken;
+            SnooViewer.DataContext.Reddit = new Reddit(result.AccessToken);
+            await SnooViewer.DataContext.Reddit.InitOrUpdateUserAsync();
         }
 
         private async void LoginView_NavigationStarting(WebView _, WebViewNavigationStartingEventArgs args)
         {
             if (args.Uri.AbsoluteUri.Contains("http://127.0.0.1:3000/reddit_callback"))
             {
-                var result = await login.Login_Stage2(args.Uri);
-                LibSnoo.Models.DataContext.Token = result.AccessToken;
-                LibSnoo.Models.DataContext.RefreshToken = result.RefreshToken;
-                LibSnoo.Models.DataContext.Reddit = new Reddit(result.AccessToken);
-                await LibSnoo.Models.DataContext.Reddit.InitOrUpdateUserAsync();
+                var result = await loginHelper.Login_Stage2(args.Uri);
+                SnooViewer.DataContext.Token = result.AccessToken;
+                SnooViewer.DataContext.RefreshToken = result.RefreshToken;
+                SnooViewer.DataContext.Reddit = new Reddit(result.AccessToken);
+                await SnooViewer.DataContext.Reddit.InitOrUpdateUserAsync();
                 args.Cancel = true;
-                localSettings.Values["refresh_token"] = LibSnoo.Models.DataContext.RefreshToken;
+                localSettings.Values["refresh_token"] = SnooViewer.DataContext.RefreshToken;
                 navBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 loginView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             }
@@ -89,7 +90,7 @@ namespace SnooViewer
             else if ((string)args.InvokedItem == "Front Page")
             {
                 pageType = typeof(Pages.SubredditPage);
-                contentFrame.NavigateToType(pageType, LibSnoo.Models.DataContext.Reddit.FrontPage, navOptions);
+                contentFrame.NavigateToType(pageType, SnooViewer.DataContext.Reddit.FrontPage, navOptions);
             }
             else if ((string)args.InvokedItem == "Profile")
             {

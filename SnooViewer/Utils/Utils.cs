@@ -3,7 +3,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace LibSnoo.Utils
+namespace SnooViewer.Utils
 {
     public class Utils
     {

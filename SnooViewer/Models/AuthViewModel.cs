@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace LibSnoo.Models
+namespace SnooViewer.Models
 {
     public class AuthViewModel
     {

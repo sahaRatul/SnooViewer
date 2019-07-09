@@ -1,5 +1,5 @@
-﻿using LibSnoo.Models;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using SnooViewer.Models;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -9,14 +9,14 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace LibSnoo
+namespace SnooViewer.Helpers
 {
-    public class Login
+    public class LoginHelper
     {
         private readonly string clientId = "";
         private readonly string clientSecret = "";
         readonly HttpClient client = new HttpClient();
-        public Login(string clientId, string clientSecret)
+        public LoginHelper(string clientId, string clientSecret)
         {
             this.clientId = clientId;
             this.clientSecret = clientSecret;
