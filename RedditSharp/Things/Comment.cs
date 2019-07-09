@@ -108,9 +108,13 @@ namespace RedditSharp.Things
                     {
                         subComments.Add(newComment);
                     }
-                    else
+                    else if(newComment.Kind == "more")
                     {
-                        subComments.Add(new More(WebAgent, comment));
+                        var more = new More(WebAgent, comment);
+                        if(more.Children.Count() > 0)
+                        {
+                            subComments.Add(more);
+                        }
                     }
                 }
             }

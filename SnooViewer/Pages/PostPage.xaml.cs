@@ -84,9 +84,8 @@ namespace SnooViewer.Pages
                         DepthFirstTraversal(comment as Comment, flatTree);
                         flatTree.Reverse().ToList().ForEach((x) => tempList.Add(x));
                     }
-                    else if (comment is More)
+                    else if (comment is More && (comment as More).Children.Count() > 0)
                     {
-                        (comment as More).Depth = clickedItem.Depth;
                         tempList.Add(comment);
                     }
                 }
