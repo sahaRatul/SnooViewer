@@ -207,7 +207,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RedditSharp\RedditSharp.csproj">
-      <Project>{5654FDBE-074C-47D9-BCE8-6AF9CB35E084}</Project>
+      <Project>{4178260e-91ca-4fc7-a704-aec7527830c4}</Project>
       <Name>RedditSharp</Name>
     </ProjectReference>
   </ItemGroup>

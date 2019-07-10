@@ -90,7 +90,10 @@ namespace SnooViewer
             else if ((string)args.InvokedItem == "Front Page")
             {
                 pageType = typeof(Pages.SubredditPage);
-                contentFrame.NavigateToType(pageType, SnooViewer.DataContext.Reddit.FrontPage, navOptions);
+                if(SnooViewer.DataContext.Reddit != null)
+                {
+                    contentFrame.NavigateToType(pageType, SnooViewer.DataContext.Reddit.FrontPage, navOptions);
+                }
             }
             else if ((string)args.InvokedItem == "Profile")
             {

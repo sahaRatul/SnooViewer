@@ -37,7 +37,7 @@ namespace SnooViewer.Pages
             if(postColDef.Width.Value == 0 && selectedItem != e.ClickedItem)//Open
             {
                 anotherResizerColDef.Width = new GridLength(20);
-                postColDef.Width = new GridLength(((this.ActualWidth / 2) + 20), GridUnitType.Pixel);
+                postColDef.Width = new GridLength(((ActualWidth * 3 / 4) + 20), GridUnitType.Pixel);
                 selectedItem = e.ClickedItem;
                 postFrame.Navigate(typeof(PostPage), e.ClickedItem);
             }

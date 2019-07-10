@@ -90,6 +90,13 @@ namespace SnooViewer.Pages
                     }
                 }
 
+                if(tempList.Count == 0)
+                {
+                    //Remove the item and return
+                    commentTree.RemoveAt(index);
+                    return;
+                }
+
                 //Replace more item at index
                 commentTree[index] = tempList[0];
                 tempList.RemoveAt(0); index++;

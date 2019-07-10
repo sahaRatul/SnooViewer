@@ -595,19 +595,19 @@ namespace RedditSharp.Things
                             exit = true;
                             break;
                         case "update":
-                            result = result | LiveUpdateEventPermission.Update;
+                            result |= LiveUpdateEventPermission.Update;
                             break;
                         case "manage":
-                            result = result | LiveUpdateEventPermission.Manage;
+                            result |= LiveUpdateEventPermission.Manage;
                             break;
                         case "edit":
-                            result = result | LiveUpdateEventPermission.Edit;
+                            result |= LiveUpdateEventPermission.Edit;
                             break;
                         case "settings":
-                            result = result | LiveUpdateEventPermission.Settings;
+                            result |= LiveUpdateEventPermission.Settings;
                             break;
                         case "close":
-                            result = result | LiveUpdateEventPermission.Close;
+                            result |= LiveUpdateEventPermission.Close;
                             break;
                     }
                     if (exit)
