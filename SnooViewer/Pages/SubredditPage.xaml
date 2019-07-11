@@ -8,8 +8,9 @@
     xmlns:sys="using:System"
     xmlns:UWPToolKit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:data="using:RedditSharp.Things"
+    xmlns:constants="using:SnooViewer.Constants"
     mc:Ignorable="d"
-    Background="{ThemeResource SystemControlChromeLowAcrylicWindowBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid x:Name="subRedditPageGrid" UseLayoutRounding="True">
         <Grid.ColumnDefinitions>
@@ -19,8 +20,9 @@
         </Grid.ColumnDefinitions>
 
         <!--List Header-->
-        <StackPanel Grid.Column="0" Grid.ColumnSpan="5" Orientation="Horizontal">
-            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Text="{x:Bind selectedSubreddit.DisplayName}" x:Name="headerText" FontWeight="Thin" TextAlignment="Left" Margin="15 0 10 0" TextWrapping="NoWrap" FontSize="40"/>
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Top" Orientation="Horizontal">
+            <TextBlock TextTrimming="CharacterEllipsis" VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{x:Bind selectedSubreddit.DisplayName}" x:Name="headerText" FontWeight="Thin" TextAlignment="Left" Margin="15 0 10 10" TextWrapping="NoWrap" FontSize="40"/>
+            <ComboBox x:Name="postSort" ItemsSource="{x:Bind constants:Constants.postSortList}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Right" VerticalAlignment="Center" DisplayMemberPath="SortName" SelectedValuePath="SortValue" PlaceholderText="{x:Bind selectedSortCategory.SortName}" SelectionChanged="PostSort_SelectionChanged"/>
         </StackPanel>
 
         <!---Post List-->
@@ -59,7 +61,7 @@
         </ListView>
 
         <!---Separator-->
-        <UWPToolKit:GridSplitter Grid.Column="1" Width="10" x:Name="gridSeparator" ResizeBehavior="BasedOnAlignment" ResizeDirection="Auto" Background="Gray" Foreground="White" FontSize="10" PointerPressed="GridSeparator_PointerPressed" PointerReleased="GridSeparator_PointerReleased">
+        <UWPToolKit:GridSplitter Background="{ThemeResource SystemControlPageBackgroundTransparentBrush}" Grid.Column="1" Width="10" x:Name="gridSeparator" ResizeBehavior="BasedOnAlignment" ResizeDirection="Auto" Foreground="White" FontSize="10" PointerPressed="GridSeparator_PointerPressed" PointerReleased="GridSeparator_PointerReleased">
             <UWPToolKit:GridSplitter.Element>
                 <Grid>
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False" Text="&#xE784;" Foreground="Black" FontFamily="Segoe MDL2 Assets" />

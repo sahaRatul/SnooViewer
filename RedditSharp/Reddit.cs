@@ -88,8 +88,7 @@ namespace RedditSharp
         #endregion
 
 #pragma warning disable 1591
-        public Reddit()
-            : this(true) { }
+        public Reddit() : this(true) { }
 
         public Reddit(bool useSsl)
         {

@@ -40,7 +40,7 @@
 
         <!--Data Template for More-->
         <DataTemplate x:Key="MoreDataTemplate" x:DataType="models:More">
-            <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="2">
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch">
                 <TextBlock x:Name="moreText" Padding="{x:Bind Depth, Converter={StaticResource DepthToThicknessConverter}}" Text="{x:Bind local:PostPage.GetLoadMoreCommentsString(Children)}"/>
             </Grid>
         </DataTemplate>

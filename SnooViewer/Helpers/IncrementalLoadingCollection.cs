@@ -13,22 +13,23 @@ namespace SnooViewer.Helpers
 {
     public class IncrementalLoadingCollection<T, I> : ObservableCollection<I>, ISupportIncrementalLoading where T : IIncrementalSource<I>, new()
     {
-        private readonly T source;
-        private uint ItemsPerPage { get; set; }
-        public Subreddit Subreddit { get; set; }
-        public string SubReddit { get; set; }
-        public string CommentId { get; set; }
-        private string GetByCriteria { get; set; }
+        public Subreddit Subreddit { get; private set; }
         public bool HasMoreItems { get; private set; }
+        public Subreddit.Sort SortCriteria { get; set; }
+        public T Source { get; }
+        public uint ItemsPerPage { get; set; }
 
-        public IncrementalLoadingCollection(Subreddit subreddit, string subReddit = "all", string commentId = "", string getByCriteria = "hot", uint itemsPerPage = 10)
+        public void SetSubreddit(Subreddit value) => Subreddit = value;
+        public void SetSortCriteria(Subreddit.Sort value) => SortCriteria = value;
+        public uint GetItemsPerPage() => ItemsPerPage;
+        public void SetItemsPerPage(uint value) => ItemsPerPage = value;
+
+        public IncrementalLoadingCollection(Subreddit subreddit, Subreddit.Sort sortCriteria = Subreddit.Sort.Hot, uint itemsPerPage = 10)
         {
-            source = new T();
-            Subreddit = subreddit;
-            SubReddit = subReddit;
-            CommentId = commentId;
-            GetByCriteria = getByCriteria;
-            ItemsPerPage = itemsPerPage;
+            Source = new T();
+            SetSubreddit(subreddit);
+            SetSortCriteria(sortCriteria);
+            SetItemsPerPage(itemsPerPage);
             HasMoreItems = true;
         }
 
@@ -38,7 +39,7 @@ namespace SnooViewer.Helpers
 
             return Task.Run(async () =>
             {
-                var result = await source.GetPagedItems(Subreddit, SubReddit, CommentId, GetByCriteria, count);
+                var result = await Source.GetPagedItems(Subreddit, SortCriteria, ItemsPerPage);
                 if (result == null || result.Count() == 0)
                 {
                     HasMoreItems = false;
@@ -49,11 +50,11 @@ namespace SnooViewer.Helpers
                     {
                         foreach (I item in result)
                         {
-                            this.Add(item);
+                            Add(item);
                         }
                     });
                 }
-                return new LoadMoreItemsResult() { Count = ItemsPerPage };
+                return new LoadMoreItemsResult() { Count = GetItemsPerPage() };
             }).AsAsyncOperation();
         }
     }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using SnooViewer.Models;
+using System.Collections.Generic;
+using RedditSharp.Things;
 
 namespace SnooViewer.Constants
 {
@@ -38,6 +40,35 @@ namespace SnooViewer.Constants
             "modself",
             "history",
             "flair",
+        };
+
+        public readonly static List<SortCategory> postSortList = new List<SortCategory>
+        {
+            new SortCategory
+            {
+                SortName = "New",
+                SortValue = Subreddit.Sort.New
+            },
+            new SortCategory
+            {
+                SortName = "Rising",
+                SortValue = Subreddit.Sort.Rising
+            },
+            new SortCategory
+            {
+                SortName = "Hot",
+                SortValue = Subreddit.Sort.Hot
+            },
+            new SortCategory
+            {
+                SortName = "Top",
+                SortValue = Subreddit.Sort.Top
+            },
+            new SortCategory
+            {
+                SortName = "Controversial",
+                SortValue = Subreddit.Sort.Controversial
+            }
         };
     }
 }

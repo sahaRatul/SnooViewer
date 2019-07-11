@@ -18,7 +18,7 @@ namespace RedditSharp.Things
         private const RegexOptions Flags = RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase |
                                            RegexOptions.Compiled;
         /// <summary>
-        /// Sorting for posts in a a subreddit.
+        /// Sorting for posts in a subreddit.
         /// </summary>
         public enum Sort
         {
@@ -45,14 +45,14 @@ namespace RedditSharp.Things
         }
 
         #region Properties
-        private const string SubredditAboutUrl = "/r/{0}/about.json";
-        private string SubredditPostUrl => $"/r/{Name}.json";
-        private string SubredditNewUrl => $"/r/{Name}/new.json?sort=new";
-        private string SubredditHotUrl => $"/r/{Name}/hot.json"; // this is the default sort?
-        private string SubredditRisingUrl => $"/r/{Name}/rising.json";
-        private string SubredditTopUrl => $"/r/{Name}/top.json";
-        private string SubredditControversialUrl => $"/r/{Name}/controversial.json";
-        private string SubredditGildedUrl => $"/r/{Name}/gilded.json";
+        private const string SubredditAboutUrl = "/r/{0}/about.json?raw_json=1";
+        private string SubredditPostUrl => $"/r/{Name}.json?raw_json=1";
+        private string SubredditNewUrl => $"/r/{Name}/new.json?raw_json=1&sort=new";
+        private string SubredditHotUrl => $"/r/{Name}/hot.json?raw_json=1"; // this is the default sort?
+        private string SubredditRisingUrl => $"/r/{Name}/rising.json?raw_json=1";
+        private string SubredditTopUrl => $"/r/{Name}/top.json?raw_json=1";
+        private string SubredditControversialUrl => $"/r/{Name}/controversial.json?raw_json=1";
+        private string SubredditGildedUrl => $"/r/{Name}/gilded.json?raw_json=1";
         private const string SubscribeUrl = "/api/subscribe";
         private string GetSettingsUrl => $"/r/{Name}/about/edit.json";
         private string GetReducedSettingsUrl => $"/r/{Name}/about.json";
@@ -290,14 +290,14 @@ namespace RedditSharp.Things
         /// Posts on the front page of the subreddits
         /// </summary>
         /// <param name="max">Maximum number of records to return.</param>
-        private Listing<Post> GetHot(int max = -1)
+        private Listing<Post> GetHot(int limit = 100, int max = -1)
         {
             if (Name == "/")
             {
-                return Listing<Post>.Create(WebAgent, "/.json", max, 100);
+                return Listing<Post>.Create(WebAgent, "/.json", max, limit);
             }
 
-            return Listing<Post>.Create(WebAgent, SubredditHotUrl, max, 100);
+            return Listing<Post>.Create(WebAgent, SubredditHotUrl, max, limit);
         }
 
         /// <summary>
@@ -332,14 +332,14 @@ namespace RedditSharp.Things
         /// All posts on a subreddit.
         /// </summary>
         /// /// <param name="max">Maximum number of records to return. -1 for unlimited.</param>
-        public Listing<Post> GetPosts(int max = -1)
+        public Listing<Post> GetPosts(int limit = 100, int max = -1)
         {
             if (Name == "/")
             {
-                return Listing<Post>.Create(WebAgent, "/.json", max, 100);
+                return Listing<Post>.Create(WebAgent, "/.json?raw_json=1", max, limit);
             }
 
-            return Listing<Post>.Create(WebAgent, SubredditPostUrl, max, 100);
+            return Listing<Post>.Create(WebAgent, SubredditPostUrl, max, limit);
         }
 
         /// <summary>
@@ -347,7 +347,7 @@ namespace RedditSharp.Things
         /// </summary>
         /// <param name="sort">How to sort the results.</param>
         /// <param name="max">Maximum number of records to return.  -1 for unlimited.</param>
-        public Listing<Post> GetPosts(Sort sort, int max = -1)
+        public Listing<Post> GetPosts(Sort sort, int limit = 100, int max = -1)
         {
             switch (sort)
             {
@@ -356,7 +356,7 @@ namespace RedditSharp.Things
                 case Sort.Rising:
                     return GetRising(max);
                 case Sort.Hot:
-                    return GetHot(max);
+                    return GetHot(limit, max);
                 case Sort.Top:
                     return GetTop(max);
                 case Sort.Controversial:
